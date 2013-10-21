@@ -1,0 +1,7 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_view"
+        android:showAsAction="always" android:title="@string/action_list" android:icon="@drawable/efp__ic_action_list"/>
+
+</menu>

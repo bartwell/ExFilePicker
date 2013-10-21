@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ExFilePicker</string>
+    <string name="action_grid">Grid</string>
+    <string name="action_list">List</string>
+
+    <string-array name="size_units">
+        <item>b</item>
+        <item>kb</item>
+        <item>mb</item>
+        <item>gb</item>
+        <item>tb</item>
+        <item>pb</item>
+    </string-array>
+
+    <string name="empty_directory">This directory is empty</string>
+    <string name="action_select_all">Select all</string>
+    <string name="action_deselect">Deselect</string>
+    <string name="action_invert_selection">Invert selection</string>
+
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ExFilePicker Sample</string>
+    <string name="choose_files">Choose files</string>
+    <string name="only_one_item">Only one item</string>
+    <string name="filter_jpeg">Don\'t show *.jpeg and *.jpg</string>
+    <string name="choice_type_all">All</string>
+    <string name="choice_type_files">Files only</string>
+    <string name="choice_type_directories">Directories only</string>
+    <string name="choice_type">Choice type:</string>
+
+</resources>
