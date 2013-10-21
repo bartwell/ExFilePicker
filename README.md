@@ -14,7 +14,9 @@ It can:
 ## Usage
 
 __1.__ Add ActionBarSherlock as a dependency to ExFilePicker library
+
 __2.__ Add ExFilePicker as a dependency to your project
+
 __3.__ Add next code into your project where is needed:
 
 ```java
