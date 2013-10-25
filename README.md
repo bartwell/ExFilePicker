@@ -3,6 +3,10 @@ ExFilePicker
 
 ExFilePicker is an open source android library that allows developers to easily implement choosing files and directories in application.
 
+## Screenshotes:
+
+[![Screenshot](https://raw.github.com/bartwell/ExFilePicker/master/stuff/preview-screenshot1.png)](https://raw.github.com/bartwell/ExFilePicker/master/stuff/screenshot1.png) [![Screenshot](https://raw.github.com/bartwell/ExFilePicker/master/stuff/preview-screenshot2.png)](https://raw.github.com/bartwell/ExFilePicker/master/stuff/screenshot2.png) [![Screenshot](https://raw.github.com/bartwell/ExFilePicker/master/stuff/preview-screenshot3.png)](https://raw.github.com/bartwell/ExFilePicker/master/stuff/screenshot3.png)
+
 ## Features
 
 It can:
@@ -69,7 +73,6 @@ Look example in ExFilePickerSample.
 ## Sample Application
 
 [![Get it on Google Play](http://www.android.com/images/brand/get_it_on_play_logo_small.png)](http://play.google.com/store/apps/details?id=ru.bartwell.exfilepickersample)
-
 
 ## License
 
