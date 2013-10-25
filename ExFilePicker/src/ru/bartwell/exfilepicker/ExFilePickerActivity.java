@@ -74,8 +74,18 @@ public class ExFilePickerActivity extends SherlockActivity {
 
 		setAbsListView();
 
-		File path = new File("/");
-		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) path = Environment.getExternalStorageDirectory();
+		File path = null;
+		if (intent.hasExtra(ExFilePicker.SET_START_DIRECTORY)) {
+			String startPath = intent.getStringExtra(ExFilePicker.SET_START_DIRECTORY);
+			if (startPath != null && startPath.length() > 0) {
+				File tmp = new File(startPath);
+				if (tmp.exists() && tmp.isDirectory()) path = tmp;
+			}
+		}
+		if (path == null) {
+			path = new File("/");
+			if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) path = Environment.getExternalStorageDirectory();
+		}
 		readDirectory(path);
 	}
 
@@ -131,7 +141,9 @@ public class ExFilePickerActivity extends SherlockActivity {
 	}
 
 	void complete() {
-		ExFilePickerParcelObject object = new ExFilePickerParcelObject(currentDirectory.getAbsolutePath(), selected, selected.size());
+		String path = currentDirectory.getAbsolutePath();
+		if(!path.endsWith("/")) path+="/";
+		ExFilePickerParcelObject object = new ExFilePickerParcelObject(path, selected, selected.size());
 		Intent intent = new Intent();
 		intent.putExtra(ExFilePickerParcelObject.class.getCanonicalName(), object);
 		setResult(RESULT_OK, intent);

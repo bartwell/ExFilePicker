@@ -23,6 +23,10 @@ __3.__ Add next code into your project where is needed:
 import ru.bartwell.exfilepicker.ExFilePicker;
 import ru.bartwell.exfilepicker.ExFilePickerParcelObject;
 
+// ...
+	
+	private static final int EX_FILE_PICKER_RESULT = 0;
+
 	// ...
 	
 		Intent intent = new Intent(getApplicationContext(), ru.bartwell.exfilepicker.ExFilePickerActivity.class);
@@ -32,16 +36,35 @@ import ru.bartwell.exfilepicker.ExFilePickerParcelObject;
 	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (data != null) {
-			ExFilePickerParcelObject object = (ExFilePickerParcelObject) data.getParcelableExtra(ExFilePickerParcelObject.class.getCanonicalName());
-			if (object.count > 0) {
-				// Here is object contains selected files names and path
+		if (requestCode == EX_FILE_PICKER_RESULT) {
+			if (data != null) {
+				ExFilePickerParcelObject object = (ExFilePickerParcelObject) data.getParcelableExtra(ExFilePickerParcelObject.class.getCanonicalName());
+				if (object.count > 0) {
+					// Here is object contains selected files names and path
+				}
 			}
 		}
 	}
 ```
-__4.__ See sample to get more information about setup options.
+__4.__ Add activity in your Manufest:
 
+```xml
+<activity android:name="ru.bartwell.exfilepicker.ExFilePickerActivity" />
+```
+
+## Configuration
+
+ExFilePicker can be configurated via intent extras.
+
+* SET_ONLY_ONE_ITEM - boolean; if true, user can select only one item. False by default.
+
+* SET_FILTER_BY_EXTENSION - String[]; files extensions to show.
+
+* SET_CHOICE_TYPE - int; one of CHOICE_TYPE_ALL, CHOICE_TYPE_FILES or CHOICE_TYPE_DIRECTORIES. Set what user can select - only files, only directories or both. Both by default.
+
+* SET_START_DIRECTORY - String. This path will be open when ExFilePicker activity will called.
+
+Look example in ExFilePickerSample.
 
 ## Sample Application
 
