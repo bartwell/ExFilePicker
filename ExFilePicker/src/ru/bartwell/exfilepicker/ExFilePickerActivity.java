@@ -367,20 +367,30 @@ public class ExFilePickerActivity extends SherlockActivity {
 				thumbnail.setImageResource(R.drawable.efp__ic_folder);
 			} else {
 				if (Build.VERSION.SDK_INT >= 5) {
-					if (Arrays.asList(videoExtensions).contains(getFileExtension(file.getName()))) {
-						Cursor cursor = crThumb.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, new String[] { MediaStore.Video.Media._ID }, MediaStore.Video.Media.DATA + "='" + file.getAbsolutePath() + "'", null, null);
-						if (cursor != null && cursor.getCount() > 0) {
-							cursor.moveToFirst();
-							thumbnailBitmap = MediaStore.Video.Thumbnails.getThumbnail(crThumb, cursor.getInt(0), MediaStore.Video.Thumbnails.MICRO_KIND, null);
-							cursor.close();
+					try {
+						if (Arrays.asList(videoExtensions).contains(getFileExtension(file.getName()))) {
+							Cursor cursor = crThumb.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, new String[] { MediaStore.Video.Media._ID }, MediaStore.Video.Media.DATA + "='" + file.getAbsolutePath() + "'", null, null);
+							if (cursor != null) {
+								if (cursor.getCount() > 0) {
+									cursor.moveToFirst();
+									thumbnailBitmap = MediaStore.Video.Thumbnails.getThumbnail(crThumb, cursor.getInt(0), MediaStore.Video.Thumbnails.MICRO_KIND, null);
+								}
+								cursor.close();
+							}
+						} else if (Arrays.asList(imagesExtensions).contains(getFileExtension(file.getName()))) {
+							Cursor cursor = crThumb.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new String[] { MediaStore.Images.Media._ID }, MediaStore.Images.Media.DATA + "='" + file.getAbsolutePath() + "'", null, null);
+							if (cursor != null) {
+								if (cursor.getCount() > 0) {
+									cursor.moveToFirst();
+									thumbnailBitmap = MediaStore.Images.Thumbnails.getThumbnail(crThumb, cursor.getInt(0), MediaStore.Images.Thumbnails.MINI_KIND, null);
+								}
+								cursor.close();
+							}
 						}
-					} else if (Arrays.asList(imagesExtensions).contains(getFileExtension(file.getName()))) {
-						Cursor cursor = crThumb.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new String[] { MediaStore.Images.Media._ID }, MediaStore.Images.Media.DATA + "='" + file.getAbsolutePath() + "'", null, null);
-						if (cursor != null && cursor.getCount() > 0) {
-							cursor.moveToFirst();
-							thumbnailBitmap = MediaStore.Images.Thumbnails.getThumbnail(crThumb, cursor.getInt(0), MediaStore.Images.Thumbnails.MINI_KIND, null);
-							cursor.close();
-						}
+					} catch(Exception e) {
+						e.printStackTrace();
+					} catch (Error e) {
+						e.printStackTrace();
 					}
 				}
 				if (thumbnailBitmap == null) thumbnail.setImageResource(R.drawable.efp__ic_file);
