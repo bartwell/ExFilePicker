@@ -1,6 +1,7 @@
 package ru.bartwell.exfilepicker;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,10 +15,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.util.LruCache;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,9 +48,14 @@ public class ExFilePickerActivity extends SherlockActivity {
 	final private String[] videoExtensions = { "avi", "mp4", "3gp", "mov" };
 	final private String[] imagesExtensions = { "jpeg", "jpg", "png", "gif", "bmp", "wbmp" };
 
+	final private boolean DEBUG = false;
+	final private String TAG = "ExFilePicker";
+
 	private boolean s_onlyOneItem = false;
 	private List<String> s_filterByType;
 	private int s_choiceType;
+
+	private LruCache<String, Bitmap> bitmapsCache;
 
 	private MenuItem menuItemView;
 	private AbsListView absListView;
@@ -61,6 +70,15 @@ public class ExFilePickerActivity extends SherlockActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.efp__main_activity);
+
+		final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+		final int cacheSize = maxMemory / 8;
+		bitmapsCache = new LruCache<String, Bitmap>(cacheSize) {
+			@Override
+			protected int sizeOf(String key, Bitmap bitmap) {
+				return getBitmapSize(bitmap) / 1024;
+			}
+		};
 
 		Intent intent = getIntent();
 		s_onlyOneItem = intent.getBooleanExtra(ExFilePicker.SET_ONLY_ONE_ITEM, false);
@@ -142,7 +160,7 @@ public class ExFilePickerActivity extends SherlockActivity {
 
 	void complete() {
 		String path = currentDirectory.getAbsolutePath();
-		if(!path.endsWith("/")) path+="/";
+		if (!path.endsWith("/")) path += "/";
 		ExFilePickerParcelObject object = new ExFilePickerParcelObject(path, selected, selected.size());
 		Intent intent = new Intent();
 		intent.putExtra(ExFilePickerParcelObject.class.getCanonicalName(), object);
@@ -319,6 +337,24 @@ public class ExFilePickerActivity extends SherlockActivity {
 		return fileName.substring(index + 1, fileName.length()).toLowerCase(Locale.getDefault());
 	}
 
+	@SuppressLint("NewApi")
+	public static int getBitmapSize(Bitmap bitmap) {
+		if (Build.VERSION.SDK_INT >= 12) {
+			return bitmap.getByteCount();
+		}
+		return bitmap.getRowBytes() * bitmap.getHeight();
+	}
+
+	public void addBitmapToCache(String key, Bitmap bitmap) {
+		if (getBitmapFromCache(key) == null) {
+			bitmapsCache.put(key, bitmap);
+		}
+	}
+
+	public Bitmap getBitmapFromCache(String key) {
+		return bitmapsCache.get(key);
+	}
+
 	class FilesListAdapter extends BaseAdapter {
 		private Context mContext;
 		private int mResource;
@@ -343,13 +379,10 @@ public class ExFilePickerActivity extends SherlockActivity {
 			return position;
 		}
 
-		@SuppressLint("NewApi")
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			File file = filesList.get(position);
 
-			Bitmap thumbnailBitmap = null;
-			ContentResolver crThumb = getContentResolver();
 			convertView = LayoutInflater.from(mContext).inflate(mResource, parent, false);
 			ImageView thumbnail = (ImageView) convertView.findViewById(R.id.thumbnail);
 
@@ -366,35 +399,11 @@ public class ExFilePickerActivity extends SherlockActivity {
 			if (file.isDirectory()) {
 				thumbnail.setImageResource(R.drawable.efp__ic_folder);
 			} else {
-				if (Build.VERSION.SDK_INT >= 5) {
-					try {
-						if (Arrays.asList(videoExtensions).contains(getFileExtension(file.getName()))) {
-							Cursor cursor = crThumb.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, new String[] { MediaStore.Video.Media._ID }, MediaStore.Video.Media.DATA + "='" + file.getAbsolutePath() + "'", null, null);
-							if (cursor != null) {
-								if (cursor.getCount() > 0) {
-									cursor.moveToFirst();
-									thumbnailBitmap = MediaStore.Video.Thumbnails.getThumbnail(crThumb, cursor.getInt(0), MediaStore.Video.Thumbnails.MICRO_KIND, null);
-								}
-								cursor.close();
-							}
-						} else if (Arrays.asList(imagesExtensions).contains(getFileExtension(file.getName()))) {
-							Cursor cursor = crThumb.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new String[] { MediaStore.Images.Media._ID }, MediaStore.Images.Media.DATA + "='" + file.getAbsolutePath() + "'", null, null);
-							if (cursor != null) {
-								if (cursor.getCount() > 0) {
-									cursor.moveToFirst();
-									thumbnailBitmap = MediaStore.Images.Thumbnails.getThumbnail(crThumb, cursor.getInt(0), MediaStore.Images.Thumbnails.MINI_KIND, null);
-								}
-								cursor.close();
-							}
-						}
-					} catch(Exception e) {
-						e.printStackTrace();
-					} catch (Error e) {
-						e.printStackTrace();
-					}
-				}
-				if (thumbnailBitmap == null) thumbnail.setImageResource(R.drawable.efp__ic_file);
-				else thumbnail.setImageBitmap(thumbnailBitmap);
+				if (Build.VERSION.SDK_INT >= 5 && (Arrays.asList(videoExtensions).contains(getFileExtension(file.getName())) || Arrays.asList(imagesExtensions).contains(getFileExtension(file.getName())))) {
+					Bitmap bitmap = getBitmapFromCache(file.getAbsolutePath());
+					if (bitmap == null) new ThumbnailLoader(thumbnail).execute(file);
+					else thumbnail.setImageBitmap(bitmap);
+				} else thumbnail.setImageResource(R.drawable.efp__ic_file);
 			}
 
 			TextView filename = (TextView) convertView.findViewById(R.id.filename);
@@ -417,6 +426,73 @@ public class ExFilePickerActivity extends SherlockActivity {
 				}
 			}
 			return size + " " + units[0];
+		}
+
+		class ThumbnailLoader extends AsyncTask<File, Void, Bitmap> {
+			private final WeakReference<ImageView> imageViewReference;
+
+			public ThumbnailLoader(ImageView imageView) {
+				imageViewReference = new WeakReference<ImageView>(imageView);
+			}
+
+			@SuppressLint("NewApi")
+			@Override
+			protected Bitmap doInBackground(File... arg0) {
+				Bitmap thumbnailBitmap = null;
+				File file = arg0[0];
+				if (DEBUG) Log.d(TAG, "Loading thumbnail");
+				if (file != null) {
+					if (DEBUG) Log.d(TAG, file.getAbsolutePath());
+					try {
+						ContentResolver crThumb = getContentResolver();
+						if (Arrays.asList(videoExtensions).contains(getFileExtension(file.getName()))) {
+							if (DEBUG) Log.d(TAG, "Video");
+							Cursor cursor = crThumb.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, new String[] { MediaStore.Video.Media._ID }, MediaStore.Video.Media.DATA + "='" + file.getAbsolutePath() + "'", null, null);
+							if (cursor != null) {
+								if (DEBUG) Log.d(TAG, "Cursor is not null");
+								if (cursor.getCount() > 0) {
+									if (DEBUG) Log.d(TAG, "Cursor has data");
+									cursor.moveToFirst();
+									thumbnailBitmap = MediaStore.Video.Thumbnails.getThumbnail(crThumb, cursor.getInt(0), MediaStore.Video.Thumbnails.MICRO_KIND, null);
+								}
+								cursor.close();
+							}
+						} else if (Arrays.asList(imagesExtensions).contains(getFileExtension(file.getName()))) {
+							if (DEBUG) Log.d(TAG, "Image");
+							Cursor cursor = crThumb.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new String[] { MediaStore.Images.Media._ID }, MediaStore.Images.Media.DATA + "='" + file.getAbsolutePath() + "'", null, null);
+							if (cursor != null) {
+								if (DEBUG) Log.d(TAG, "Cursor is not null");
+								if (cursor.getCount() > 0) {
+									if (DEBUG) Log.d(TAG, "Cursor has data");
+									cursor.moveToFirst();
+									thumbnailBitmap = MediaStore.Images.Thumbnails.getThumbnail(crThumb, cursor.getInt(0), MediaStore.Images.Thumbnails.MINI_KIND, null);
+								}
+								cursor.close();
+							}
+						}
+						if (DEBUG) Log.d(TAG, "Finished");
+					} catch (Exception e) {
+						e.printStackTrace();
+					} catch (Error e) {
+						e.printStackTrace();
+					}
+				}
+				if (DEBUG) Log.d(TAG, "Thumbnail: " + (thumbnailBitmap == null ? "null" : "Ok"));
+				if (thumbnailBitmap != null) addBitmapToCache(file.getAbsolutePath(), thumbnailBitmap);
+				return thumbnailBitmap;
+			}
+
+			@Override
+			protected void onPostExecute(Bitmap bitmap) {
+				if (imageViewReference != null) {
+					final ImageView imageView = imageViewReference.get();
+					if (imageView != null) {
+						if (bitmap == null) imageView.setImageResource(R.drawable.efp__ic_file);
+						else imageView.setImageBitmap(bitmap);
+					}
+				}
+			}
+
 		}
 
 	}
