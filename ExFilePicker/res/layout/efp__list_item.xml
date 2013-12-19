@@ -18,8 +18,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:contentDescription="@string/app_name"
-            android:scaleType="centerCrop"
-            android:src="@drawable/efp__ic_launcher" />
+            android:scaleType="centerInside"
+            android:src="@android:drawable/stat_sys_download_done" />
 
         <TextView
             android:id="@+id/filename"

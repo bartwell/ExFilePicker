@@ -294,14 +294,14 @@ public class ExFilePickerActivity extends SherlockActivity {
 								} else if (itemId == R.id.action_deselect) {
 									selected.clear();
 								} else if (itemId == R.id.action_invert_selection) {
-									if (selected.size() > 0) {
+									//if (selected.size() > 0) {
 										ArrayList<String> tmp = new ArrayList<String>();
 										for (int i = 0; i < filesList.size(); i++) {
 											String filename = filesList.get(i).getName();
 											if (!selected.contains(filename)) tmp.add(filename);
 										}
 										selected = tmp;
-									}
+									//}
 								}
 								((BaseAdapter) absListView.getAdapter()).notifyDataSetChanged();
 								return false;
