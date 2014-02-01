@@ -9,5 +9,6 @@
     <string name="choice_type_files">Files only</string>
     <string name="choice_type_directories">Directories only</string>
     <string name="choice_type">Choice type:</string>
+    <string name="disable_new_folder_button">Disable \"New folder\" button</string>
 
 </resources>

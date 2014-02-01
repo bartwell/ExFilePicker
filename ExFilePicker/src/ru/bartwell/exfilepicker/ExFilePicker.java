@@ -5,6 +5,7 @@ public class ExFilePicker {
 	public final static String SET_FILTER_BY_EXTENSION = "FilterByExtension";
 	public final static String SET_CHOICE_TYPE = "ViewType";
 	public final static String SET_START_DIRECTORY = "StartDirectory";
+	public final static String DISABLE_NEW_FOLDER_BUTTON = "DisableNewFolderButton";
 
 	public final static int CHOICE_TYPE_ALL = 0;
 	public final static int CHOICE_TYPE_FILES = 1;

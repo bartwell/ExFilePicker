@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ru.bartwell.exfilepickersample"
-    android:versionCode="3"
-    android:versionName="1.2" >
+    android:versionCode="4"
+    android:versionName="1.3" >
 
     <uses-sdk
         android:minSdkVersion="4"
         android:targetSdkVersion="18" />
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Sherlock" >
+        android:theme="@android:style/Theme" >
         <activity
             android:name="ru.bartwell.exfilepickersample.MainActivity"
             android:label="@string/app_name" >
@@ -21,7 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="ru.bartwell.exfilepicker.ExFilePickerActivity" />
+        <activity
+            android:name="ru.bartwell.exfilepicker.ExFilePickerActivity"
+            android:configChanges="orientation|screenSize" />
     </application>
 
 </manifest>

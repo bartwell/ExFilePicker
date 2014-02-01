@@ -26,6 +26,7 @@ public class MainActivity extends Activity {
 				Intent intent = new Intent(getApplicationContext(), ru.bartwell.exfilepicker.ExFilePickerActivity.class);
 				if (((CheckBox) findViewById(R.id.only_one_item)).isChecked()) intent.putExtra(ExFilePicker.SET_ONLY_ONE_ITEM, true);
 				if (((CheckBox) findViewById(R.id.filter_jpeg)).isChecked()) intent.putExtra(ExFilePicker.SET_FILTER_BY_EXTENSION, new String[] { "jpg", "jpeg" });
+				if (((CheckBox) findViewById(R.id.disable_new_folder_button)).isChecked()) intent.putExtra(ExFilePicker.DISABLE_NEW_FOLDER_BUTTON, true);
 
 				int checkedChoiceRadio = ((RadioGroup) findViewById(R.id.choice_type)).getCheckedRadioButtonId();
 				if (checkedChoiceRadio == R.id.choice_type_files) intent.putExtra(ExFilePicker.SET_CHOICE_TYPE, ExFilePicker.CHOICE_TYPE_FILES);

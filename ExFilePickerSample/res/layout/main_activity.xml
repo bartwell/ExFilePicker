@@ -18,6 +18,12 @@
         android:layout_height="wrap_content"
         android:text="@string/filter_jpeg" />
 
+    <CheckBox
+        android:id="@+id/disable_new_folder_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/disable_new_folder_button" />
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"

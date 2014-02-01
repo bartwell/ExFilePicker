@@ -18,5 +18,10 @@
     <string name="action_select_all">Select all</string>
     <string name="action_deselect">Deselect</string>
     <string name="action_invert_selection">Invert selection</string>
+    <string name="new_folder">New folder</string>
+    <string name="folder_name_hint">Folder name</string>
+    <string name="folder_created">Folder created successfully</string>
+    <string name="folder_not_created">Error! Folder doesn\'t created</string>
+    <string name="folder_already_exists">Folder already exists</string>
 
 </resources>

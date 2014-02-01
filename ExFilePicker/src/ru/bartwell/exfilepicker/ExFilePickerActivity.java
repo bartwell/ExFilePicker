@@ -10,8 +10,13 @@ import java.util.List;
 import java.util.Locale;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -22,11 +27,15 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.util.LruCache;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -34,16 +43,13 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.ActionMode;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-
-public class ExFilePickerActivity extends SherlockActivity {
+public class ExFilePickerActivity extends Activity implements OnLongClickListener {
 
 	final private String[] videoExtensions = { "avi", "mp4", "3gp", "mov" };
 	final private String[] imagesExtensions = { "jpeg", "jpg", "png", "gif", "bmp", "wbmp" };
@@ -57,18 +63,22 @@ public class ExFilePickerActivity extends SherlockActivity {
 
 	private LruCache<String, Bitmap> bitmapsCache;
 
-	private MenuItem menuItemView;
 	private AbsListView absListView;
 	private View emptyView;
 	private ArrayList<File> filesList = new ArrayList<File>();
 	private ArrayList<String> selected = new ArrayList<String>();
 	private File currentDirectory;
 	private boolean isMultiChoice = false;
-	private ActionMode actionMode;
+	private ImageButton change_view;
+	private TextView header_title;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		setTheme(R.style.ExFilePickerTheme);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+
 		setContentView(R.layout.efp__main_activity);
 
 		final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
@@ -91,6 +101,7 @@ public class ExFilePickerActivity extends SherlockActivity {
 		addContentView(emptyView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
 		setAbsListView();
+		showSecondHeader(false);
 
 		File path = null;
 		if (intent.hasExtra(ExFilePicker.SET_START_DIRECTORY)) {
@@ -105,6 +116,155 @@ public class ExFilePickerActivity extends SherlockActivity {
 			if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) path = Environment.getExternalStorageDirectory();
 		}
 		readDirectory(path);
+
+		header_title = (TextView) findViewById(R.id.title);
+		updateTitle();
+
+		ImageButton new_folder = (ImageButton) findViewById(R.id.menu_new_folder);
+		if (!intent.getBooleanExtra(ExFilePicker.DISABLE_NEW_FOLDER_BUTTON, false)) {
+			new_folder.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					AlertDialog.Builder alert = new AlertDialog.Builder(ExFilePickerActivity.this);
+					alert.setTitle(R.string.new_folder);
+					View alertView = LayoutInflater.from(ExFilePickerActivity.this).inflate(R.layout.efp__new_folder, null);
+					final TextView name = (TextView) alertView.findViewById(R.id.name);
+					alert.setView(alertView);
+					alert.setPositiveButton(android.R.string.ok, new Dialog.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							if (name.length() > 0) {
+								File file = new File(currentDirectory, name.getText().toString());
+								if (file.exists()) Toast.makeText(ExFilePickerActivity.this, R.string.folder_already_exists, Toast.LENGTH_SHORT).show();
+								else {
+									file.mkdir();
+									if (file.isDirectory()) {
+										readDirectory(currentDirectory);
+										Toast.makeText(ExFilePickerActivity.this, R.string.folder_created, Toast.LENGTH_SHORT).show();
+									} else Toast.makeText(ExFilePickerActivity.this, R.string.folder_not_created, Toast.LENGTH_SHORT).show();
+								}
+							}
+						}
+					});
+					alert.setNegativeButton(android.R.string.cancel, null);
+					alert.show();
+				}
+			});
+			new_folder.setOnLongClickListener(this);
+		} else new_folder.setVisibility(ImageButton.GONE);
+
+		change_view = (ImageButton) findViewById(R.id.menu_change_view);
+		setMenuItemView();
+		change_view.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				setAbsListView();
+				setMenuItemView();
+			}
+		});
+		change_view.setOnLongClickListener(this);
+
+		ImageButton cancel = (ImageButton) findViewById(R.id.menu_cancel);
+		cancel.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				disableMultiChoice();
+				showSecondHeader(false);
+			}
+		});
+		cancel.setOnLongClickListener(this);
+
+		ImageButton ok1 = (ImageButton) findViewById(R.id.menu_ok1);
+		View ok1_delimiter = findViewById(R.id.ok1_delimiter);
+		if (s_onlyOneItem && s_choiceType == ExFilePicker.CHOICE_TYPE_DIRECTORIES) {
+			ok1.setVisibility(ImageButton.VISIBLE);
+			ok1_delimiter.setVisibility(ImageButton.VISIBLE);
+			ok1.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					ArrayList<String> list = new ArrayList<String>();
+					String parent;
+					File parentFile = currentDirectory.getParentFile();
+					if (parentFile == null) {
+						parent = "";
+						list.add("/");
+					} else {
+						parent = parentFile.getAbsolutePath();
+						list.add(currentDirectory.getName());
+					}
+					ExFilePickerParcelObject object = new ExFilePickerParcelObject(parent, list, 1);
+					complete(object);
+				}
+			});
+			ok1.setOnLongClickListener(this);
+		} else {
+			ok1.setVisibility(ImageButton.GONE);
+			ok1_delimiter.setVisibility(ImageButton.GONE);
+		}
+
+		ImageButton select_all = (ImageButton) findViewById(R.id.menu_select_all);
+		ImageButton deselect = (ImageButton) findViewById(R.id.menu_deselect);
+		ImageButton invert = (ImageButton) findViewById(R.id.menu_invert);
+		if (s_onlyOneItem) {
+			select_all.setVisibility(ImageButton.GONE);
+			deselect.setVisibility(ImageButton.GONE);
+			invert.setVisibility(ImageButton.GONE);
+		} else {
+			select_all.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					selected.clear();
+					for (int i = 0; i < filesList.size(); i++)
+						selected.add(filesList.get(i).getName());
+					((BaseAdapter) absListView.getAdapter()).notifyDataSetChanged();
+				}
+			});
+			select_all.setOnLongClickListener(this);
+
+			deselect.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					selected.clear();
+					((BaseAdapter) absListView.getAdapter()).notifyDataSetChanged();
+				}
+			});
+			deselect.setOnLongClickListener(this);
+
+			invert.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					ArrayList<String> tmp = new ArrayList<String>();
+					for (int i = 0; i < filesList.size(); i++) {
+						String filename = filesList.get(i).getName();
+						if (!selected.contains(filename)) tmp.add(filename);
+					}
+					selected = tmp;
+					((BaseAdapter) absListView.getAdapter()).notifyDataSetChanged();
+				}
+			});
+			invert.setOnLongClickListener(this);
+		}
+
+		ImageButton ok2 = (ImageButton) findViewById(R.id.menu_ok2);
+		ok2.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (selected.size() > 0) {
+					complete(null);
+				} else {
+					disableMultiChoice();
+				}
+			}
+		});
+		ok2.setOnLongClickListener(this);
+	}
+
+	@Override
+	public boolean onLongClick(View v) {
+		Toast toast = Toast.makeText(ExFilePickerActivity.this, v.getContentDescription(), Toast.LENGTH_SHORT);
+		toast.setGravity(Gravity.LEFT | Gravity.TOP, v.getLeft(), v.getBottom() + v.getBottom() / 2);
+		toast.show();
+		return true;
 	}
 
 	@Override
@@ -113,43 +273,26 @@ public class ExFilePickerActivity extends SherlockActivity {
 			if (event.getAction() == KeyEvent.ACTION_UP) {
 				if (isMultiChoice) {
 					disableMultiChoice();
-					if (actionMode != null) actionMode.finish();
 				} else {
 					File parentFile = currentDirectory.getParentFile();
 					if (parentFile == null) {
-						complete();
+						complete(null);
 					} else {
 						readDirectory(parentFile);
+						updateTitle();
 					}
 				}
 			} else if (event.getAction() == KeyEvent.ACTION_DOWN && (event.getFlags() & KeyEvent.FLAG_LONG_PRESS) == KeyEvent.FLAG_LONG_PRESS) {
 				selected.clear();
-				complete();
+				complete(null);
 			}
 			return true;
 		}
 		return super.dispatchKeyEvent(event);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getSupportMenuInflater().inflate(R.menu.efp__main, menu);
-		menuItemView = menu.findItem(R.id.action_view);
-		setMenuItemView();
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		int itemId = item.getItemId();
-		if (itemId == R.id.action_view) {
-			setAbsListView();
-			setMenuItemView();
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	void disableMultiChoice() {
+	private void disableMultiChoice() {
+		showSecondHeader(false);
 		isMultiChoice = false;
 		selected.clear();
 		if (s_choiceType == ExFilePicker.CHOICE_TYPE_FILES && !s_onlyOneItem) {
@@ -158,17 +301,33 @@ public class ExFilePickerActivity extends SherlockActivity {
 		((BaseAdapter) absListView.getAdapter()).notifyDataSetChanged();
 	}
 
-	void complete() {
-		String path = currentDirectory.getAbsolutePath();
-		if (!path.endsWith("/")) path += "/";
-		ExFilePickerParcelObject object = new ExFilePickerParcelObject(path, selected, selected.size());
+	private void showSecondHeader(boolean show) {
+		if (show) {
+			findViewById(R.id.header1).setVisibility(View.GONE);
+			findViewById(R.id.header2).setVisibility(View.VISIBLE);
+		} else {
+			findViewById(R.id.header1).setVisibility(View.VISIBLE);
+			findViewById(R.id.header2).setVisibility(View.GONE);
+		}
+	}
+
+	private void updateTitle() {
+		header_title.setText(currentDirectory.getName());
+	}
+
+	private void complete(ExFilePickerParcelObject object) {
+		if (object == null) {
+			String path = currentDirectory.getAbsolutePath();
+			if (!path.endsWith("/")) path += "/";
+			object = new ExFilePickerParcelObject(path, selected, selected.size());
+		}
 		Intent intent = new Intent();
 		intent.putExtra(ExFilePickerParcelObject.class.getCanonicalName(), object);
 		setResult(RESULT_OK, intent);
 		finish();
 	}
 
-	void readDirectory(File path) {
+	private void readDirectory(File path) {
 		currentDirectory = path;
 		filesList.clear();
 		File[] files = path.listFiles();
@@ -194,17 +353,17 @@ public class ExFilePickerActivity extends SherlockActivity {
 		((BaseAdapter) absListView.getAdapter()).notifyDataSetChanged();
 	}
 
-	void setMenuItemView() {
+	private void setMenuItemView() {
 		if (absListView.getId() == R.id.gridview) {
-			menuItemView.setIcon(R.drawable.efp__ic_action_list);
-			menuItemView.setTitle(R.string.action_list);
+			change_view.setImageResource(R.drawable.efp__ic_action_list);
+			change_view.setContentDescription(getString(R.string.action_list));
 		} else {
-			menuItemView.setIcon(R.drawable.efp__ic_action_grid);
-			menuItemView.setTitle(R.string.action_grid);
+			change_view.setImageResource(R.drawable.efp__ic_action_grid);
+			change_view.setContentDescription(getString(R.string.action_grid));
 		}
 	}
 
-	void setAbsListView() {
+	private void setAbsListView() {
 		int curView, nextView;
 		if (absListView == null || absListView.getId() == R.id.gridview) {
 			curView = R.id.gridview;
@@ -241,10 +400,11 @@ public class ExFilePickerActivity extends SherlockActivity {
 					} else {
 						if (file.isDirectory()) {
 							readDirectory(file);
+							updateTitle();
 							absListView.setSelection(0);
 						} else {
 							selected.add(file.getName());
-							complete();
+							complete(null);
 						}
 					}
 				}
@@ -272,50 +432,8 @@ public class ExFilePickerActivity extends SherlockActivity {
 						}
 
 						((BaseAdapter) absListView.getAdapter()).notifyDataSetChanged();
-						actionMode = startActionMode(new ActionMode.Callback() {
-							@Override
-							public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-								getSupportMenuInflater().inflate(R.menu.efp__action_mode, menu);
-								return true;
-							}
 
-							@Override
-							public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-								return false;
-							}
-
-							@Override
-							public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-								int itemId = item.getItemId();
-								if (itemId == R.id.action_select_all) {
-									selected.clear();
-									for (int i = 0; i < filesList.size(); i++)
-										selected.add(filesList.get(i).getName());
-								} else if (itemId == R.id.action_deselect) {
-									selected.clear();
-								} else if (itemId == R.id.action_invert_selection) {
-									//if (selected.size() > 0) {
-										ArrayList<String> tmp = new ArrayList<String>();
-										for (int i = 0; i < filesList.size(); i++) {
-											String filename = filesList.get(i).getName();
-											if (!selected.contains(filename)) tmp.add(filename);
-										}
-										selected = tmp;
-									//}
-								}
-								((BaseAdapter) absListView.getAdapter()).notifyDataSetChanged();
-								return false;
-							}
-
-							@Override
-							public void onDestroyActionMode(ActionMode mode) {
-								if (selected.size() > 0) {
-									complete();
-								} else {
-									disableMultiChoice();
-								}
-							}
-						});
+						showSecondHeader(true);
 						return true;
 					}
 					return false;
@@ -326,32 +444,31 @@ public class ExFilePickerActivity extends SherlockActivity {
 		absListView.setVisibility(View.VISIBLE);
 	}
 
-	void setItemBackground(View view, boolean state) {
-		view.setBackgroundResource(state ? R.drawable.abs__list_activated_holo : 0);
+	private void setItemBackground(View view, boolean state) {
+		view.setBackgroundResource(state ? R.drawable.efp__list_activated_holo : 0);
 	}
 
 	@SuppressLint("DefaultLocale")
-	public String getFileExtension(String fileName) {
+	private String getFileExtension(String fileName) {
 		int index = fileName.lastIndexOf(".");
 		if (index == -1) return "";
 		return fileName.substring(index + 1, fileName.length()).toLowerCase(Locale.getDefault());
 	}
 
-	@SuppressLint("NewApi")
-	public static int getBitmapSize(Bitmap bitmap) {
+	private int getBitmapSize(Bitmap bitmap) {
 		if (Build.VERSION.SDK_INT >= 12) {
-			return bitmap.getByteCount();
+			return new OldApiHelper().getBtimapSize(bitmap);
 		}
 		return bitmap.getRowBytes() * bitmap.getHeight();
 	}
 
-	public void addBitmapToCache(String key, Bitmap bitmap) {
+	private void addBitmapToCache(String key, Bitmap bitmap) {
 		if (getBitmapFromCache(key) == null) {
 			bitmapsCache.put(key, bitmap);
 		}
 	}
 
-	public Bitmap getBitmapFromCache(String key) {
+	private Bitmap getBitmapFromCache(String key) {
 		return bitmapsCache.get(key);
 	}
 
@@ -435,7 +552,7 @@ public class ExFilePickerActivity extends SherlockActivity {
 				imageViewReference = new WeakReference<ImageView>(imageView);
 			}
 
-			@SuppressLint("NewApi")
+			@TargetApi(Build.VERSION_CODES.ECLAIR)
 			@Override
 			protected Bitmap doInBackground(File... arg0) {
 				Bitmap thumbnailBitmap = null;
@@ -495,6 +612,14 @@ public class ExFilePickerActivity extends SherlockActivity {
 
 		}
 
+	}
+
+	// Need for backward compatibility to Android 1.6
+	private class OldApiHelper {
+		@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
+		private int getBtimapSize(Bitmap bitmap) {
+			return bitmap.getByteCount();
+		}
 	}
 
 }

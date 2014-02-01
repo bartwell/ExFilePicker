@@ -14,14 +14,13 @@ It can:
 * Choose one directory
 * Choose few files and/or directories
 * Filter by file extension
+* Creating directories
 
 ## Usage
 
-__1.__ Add ActionBarSherlock as a dependency to ExFilePicker library
+__1.__ Add ExFilePicker library as a dependency to your project
 
-__2.__ Add ExFilePicker as a dependency to your project
-
-__3.__ Add next code into your project where is needed:
+__2.__ Add next code into your project where is needed:
 
 ```java
 import ru.bartwell.exfilepicker.ExFilePicker;
@@ -50,10 +49,15 @@ import ru.bartwell.exfilepicker.ExFilePickerParcelObject;
 		}
 	}
 ```
-__4.__ Add activity in your Manufest:
+__3.__ Add activity in your Manifest:
 
 ```xml
-<activity android:name="ru.bartwell.exfilepicker.ExFilePickerActivity" />
+<activity android:name="ru.bartwell.exfilepicker.ExFilePickerActivity" android:configChanges="orientation|screenSize" />
+```
+__4.__ If you need a "New folder" button, add permission in your Manifest:
+
+```xml
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 ```
 
 ## Configuration
@@ -67,6 +71,8 @@ ExFilePicker can be configurated via intent extras.
 * SET_CHOICE_TYPE - int; one of CHOICE_TYPE_ALL, CHOICE_TYPE_FILES or CHOICE_TYPE_DIRECTORIES. Set what user can select - only files, only directories or both. Both by default.
 
 * SET_START_DIRECTORY - String. This path will be open when ExFilePicker activity will called.
+
+* DISABLE_NEW_FOLDER_BUTTON - boolean; if true, button "New folder" will not showing.
 
 Look example in ExFilePickerSample.
 
