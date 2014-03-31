@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ExFilePicker</string>
+    <string name="action_grid">ग्रिड</string>
+    <string name="action_list">सूची</string>
+
+    <string-array name="size_units">
+        <item>बी</item>
+        <item>केबी</item>
+        <item>एमबी</item>
+        <item>जीबी</item>
+        <item>टीबी</item>
+        <item>पीबी</item>
+    </string-array>
+
+    <string name="empty_directory">इस निर्देशिका खाली है</string>
+    <string name="action_select_all">सभी का चयन करें</string>
+    <string name="action_deselect">अचयनित</string>
+    <string name="action_invert_selection">उलटा चयन</string>
+    <string name="new_folder">नई फ़ोल्डर</string>
+    <string name="folder_name_hint">फ़ोल्डर का नाम</string>
+    <string name="folder_created">फ़ोल्डर सफलतापूर्वक बनाया</string>
+    <string name="folder_not_created">त्रुटि! फ़ोल्डर नहीं बनाया</string>
+    <string name="folder_already_exists">फ़ोल्डर पहले से मौजूद है</string>
+
+</resources>

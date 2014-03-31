@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ExFilePicker</string>
+    <string name="action_grid">Gitter</string>
+    <string name="action_list">Liste</string>
+
+    <string-array name="size_units">
+        <item>B</item>
+        <item>kB</item>
+        <item>mB</item>
+        <item>gB</item>
+        <item>tB</item>
+        <item>pB</item>
+    </string-array>
+
+    <string name="empty_directory">Dieser Ordner ist leer</string>
+    <string name="action_select_all">Alles selektieren</string>
+    <string name="action_deselect">Selektion aufheben</string>
+    <string name="action_invert_selection">Auswahl umkehren</string>
+    <string name="new_folder">Neuer Ordner</string>
+    <string name="folder_name_hint">Ordnername</string>
+    <string name="folder_created">Ordner ist erfolgreich erstellt</string>
+    <string name="folder_not_created">Fehler! Ordner konnte nicht erstellt werden</string>
+    <string name="folder_already_exists">Ordner ist bereits vorhanden</string>
+
+</resources>

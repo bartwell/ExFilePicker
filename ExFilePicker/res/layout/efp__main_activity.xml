@@ -30,7 +30,7 @@
             android:background="@drawable/efp__header_buttons_selector"
             android:contentDescription="@string/new_folder"
             android:scaleType="center"
-            android:src="@drawable/efp__ic_action_new_folder" />
+            android:src="?attr/efp__ic_action_new_folder" />
 
         <ImageButton
             android:id="@+id/menu_ok1"
@@ -41,7 +41,7 @@
             android:background="@drawable/efp__header_buttons_selector"
             android:contentDescription="@android:string/ok"
             android:scaleType="center"
-            android:src="@drawable/efp__ic_action_ok" />
+            android:src="?attr/efp__ic_action_ok" />
 
         <View
             android:id="@+id/ok1_delimiter"
@@ -62,7 +62,7 @@
             android:background="@drawable/efp__header_buttons_selector"
             android:contentDescription="@string/action_grid"
             android:scaleType="center"
-            android:src="@drawable/efp__ic_action_grid" />
+            android:src="?attr/efp__ic_action_grid" />
 
     </RelativeLayout>
 
@@ -81,7 +81,7 @@
             android:background="@drawable/efp__header_buttons_selector"
             android:contentDescription="@android:string/cancel"
             android:scaleType="center"
-            android:src="@drawable/efp__ic_action_cancel" />
+            android:src="?attr/efp__ic_action_cancel" />
 
         <ImageButton
             android:id="@+id/menu_ok2"
@@ -92,7 +92,7 @@
             android:background="@drawable/efp__header_buttons_selector"
             android:contentDescription="@android:string/ok"
             android:scaleType="center"
-            android:src="@drawable/efp__ic_action_ok" />
+            android:src="?attr/efp__ic_action_ok" />
 
         <View
             android:id="@+id/view1"
@@ -111,7 +111,7 @@
             android:background="@drawable/efp__header_buttons_selector"
             android:contentDescription="@string/action_invert_selection"
             android:scaleType="center"
-            android:src="@drawable/efp__ic_action_invert_selection" />
+            android:src="?attr/efp__ic_action_invert_selection" />
 
         <ImageButton
             android:id="@+id/menu_deselect"
@@ -122,7 +122,7 @@
             android:background="@drawable/efp__header_buttons_selector"
             android:contentDescription="@string/action_deselect"
             android:scaleType="center"
-            android:src="@drawable/efp__ic_action_deselect" />
+            android:src="?attr/efp__ic_action_deselect" />
 
         <ImageButton
             android:id="@+id/menu_select_all"
@@ -133,7 +133,7 @@
             android:background="@drawable/efp__header_buttons_selector"
             android:contentDescription="@string/action_select_all"
             android:scaleType="center"
-            android:src="@drawable/efp__ic_action_select_all" />
+            android:src="?attr/efp__ic_action_select_all" />
 
         <View
             android:layout_width="1dip"

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ExFilePicker</string>
+    <string name="action_grid">Võrgustik</string>
+    <string name="action_list">Nimekiri</string>
+
+    <string-array name="size_units">
+        <item>B</item>
+        <item>kB</item>
+        <item>mB</item>
+        <item>gB</item>
+        <item>tB</item>
+        <item>pB</item>
+    </string-array>
+
+    <string name="empty_directory">See kaust on tühi</string>
+    <string name="action_select_all">Vali kõik</string>
+    <string name="action_deselect">Tühista</string>
+    <string name="action_invert_selection">Pöördjärjesta valitud</string>
+    <string name="new_folder">Uus kaust</string>
+    <string name="folder_name_hint">Kausta nimi</string>
+    <string name="folder_created">Kaust on edukalt loodud</string>
+    <string name="folder_not_created">Viga! Kausta ei ole loodud</string>
+    <string name="folder_already_exists">Kaust juba eksisteerib</string>
+
+</resources>

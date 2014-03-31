@@ -52,7 +52,10 @@ import ru.bartwell.exfilepicker.ExFilePickerParcelObject;
 __3.__ Add activity in your Manifest:
 
 ```xml
-<activity android:name="ru.bartwell.exfilepicker.ExFilePickerActivity" android:configChanges="orientation|screenSize" />
+	<activity
+		android:name="ru.bartwell.exfilepicker.ExFilePickerActivity"
+		android:configChanges="orientation|screenSize"
+		android:theme="@style/ExFilePickerThemeDark" />
 ```
 __4.__ If you need a "New folder" button, add permission in your Manifest:
 
@@ -66,7 +69,11 @@ ExFilePicker can be configurated via intent extras.
 
 * SET_ONLY_ONE_ITEM - boolean; if true, user can select only one item. False by default.
 
-* SET_FILTER_BY_EXTENSION - String[]; files extensions to show.
+* SET_FILTER_BY_EXTENSION - removed. Use SET_FILTER_EXCLUDE or SET_FILTER_LISTED instead.
+
+* SET_FILTER_LISTED - String[]; only files with this extensions will showed.
+
+* SET_FILTER_EXCLUDE - String[]; files with this extensions will excluded.
 
 * SET_CHOICE_TYPE - int; one of CHOICE_TYPE_ALL, CHOICE_TYPE_FILES or CHOICE_TYPE_DIRECTORIES. Set what user can select - only files, only directories or both. Both by default.
 
@@ -75,6 +82,10 @@ ExFilePicker can be configurated via intent extras.
 * DISABLE_NEW_FOLDER_BUTTON - boolean; if true, button "New folder" will not showing.
 
 Look example in ExFilePickerSample.
+
+## Customization
+
+ExFilePicker library provide two themes for ExFilePicker's activity: dark and light (ExFilePickerThemeDark and ExFilePickerThemeLight respectively). If you need to customize ExFilePicker's activity view, you can extend your own theme from any ExFilePicker's theme and override needed options.
 
 ## Sample Application
 

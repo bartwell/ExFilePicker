@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ExFilePicker</string>
+    <string name="action_grid">Cuadrícula</string>
+    <string name="action_list">Lista</string>
+
+    <string-array name="size_units">
+        <item>B</item>
+        <item>kB</item>
+        <item>mB</item>
+        <item>gB</item>
+        <item>tB</item>
+        <item>pB</item>
+    </string-array>
+
+    <string name="empty_directory">Esta carpeta está vacía</string>
+    <string name="action_select_all">Seleccionar todo</string>
+    <string name="action_deselect">Deseleccionar</string>
+    <string name="action_invert_selection">Invertir selección</string>
+    <string name="new_folder">Nueva carpeta</string>
+    <string name="folder_name_hint">Nombre de la carpeta</string>
+    <string name="folder_created">Carpeta creada con éxito</string>
+    <string name="folder_not_created">Error! No se crea la carpeta</string>
+    <string name="folder_already_exists">La carpeta ya existe</string>
+
+</resources>

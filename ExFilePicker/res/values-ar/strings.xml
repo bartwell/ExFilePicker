@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ExFilePicker</string>
+    <string name="action_grid">شبكة</string>
+    <string name="action_list">لائحة</string>
+
+    <string-array name="size_units">
+        <item>B</item>
+        <item>kB</item>
+        <item>mB</item>
+        <item>gB</item>
+        <item>tB</item>
+        <item>pB</item>
+    </string-array>
+
+    <string name="empty_directory">هذه العنوان فارغ</string>
+    <string name="action_select_all">تحديد الكل</string>
+    <string name="action_deselect">الغاء الاختيار</string>
+    <string name="action_invert_selection">قلب الاختيار</string>
+    <string name="new_folder">مجلد جديد</string>
+    <string name="folder_name_hint">اسم المجلد</string>
+    <string name="folder_created">تم انشاء الملف بنجاح</string>
+    <string name="folder_not_created">خطأ! لم يتم انشاء المجلد</string>
+    <string name="folder_already_exists">المجلد موجود مسبقا</string>
+
+</resources>

@@ -6,12 +6,12 @@
     <string name="action_list">List</string>
 
     <string-array name="size_units">
-        <item>b</item>
-        <item>kb</item>
-        <item>mb</item>
-        <item>gb</item>
-        <item>tb</item>
-        <item>pb</item>
+        <item>B</item>
+        <item>kB</item>
+        <item>mB</item>
+        <item>gB</item>
+        <item>tB</item>
+        <item>pB</item>
     </string-array>
 
     <string name="empty_directory">This directory is empty</string>
@@ -21,7 +21,7 @@
     <string name="new_folder">New folder</string>
     <string name="folder_name_hint">Folder name</string>
     <string name="folder_created">Folder created successfully</string>
-    <string name="folder_not_created">Error! Folder doesn\'t created</string>
+    <string name="folder_not_created">Error! Folder isn\'t created</string>
     <string name="folder_already_exists">Folder already exists</string>
 
 </resources>

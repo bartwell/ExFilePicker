@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ExFilePicker</string>
+    <string name="action_grid">グリッド</string>
+    <string name="action_list">リスト</string>
+
+    <string-array name="size_units">
+        <item>B</item>
+        <item>kB</item>
+        <item>mB</item>
+        <item>gB</item>
+        <item>tB</item>
+        <item>pB</item>
+    </string-array>
+
+    <string name="empty_directory">このフォルダは空です。</string>
+    <string name="action_select_all">すべて選択</string>
+    <string name="action_deselect">選択解除</string>
+    <string name="action_invert_selection">選択を反転</string>
+    <string name="new_folder">新しいフォルダ</string>
+    <string name="folder_name_hint">フォルダ名</string>
+    <string name="folder_created">フォルダが正常に作成されました。</string>
+    <string name="folder_not_created">エラー! フォルダが作成されませんでした。</string>
+    <string name="folder_already_exists">フォルダが既に存在します。</string>
+
+</resources>

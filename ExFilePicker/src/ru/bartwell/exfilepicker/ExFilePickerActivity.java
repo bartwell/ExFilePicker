@@ -18,6 +18,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -58,7 +59,8 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 	final private String TAG = "ExFilePicker";
 
 	private boolean s_onlyOneItem = false;
-	private List<String> s_filterByType;
+	private List<String> s_filterExclude;
+	private List<String> s_filterListed;
 	private int s_choiceType;
 
 	private LruCache<String, Bitmap> bitmapsCache;
@@ -76,7 +78,6 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setTheme(R.style.ExFilePickerTheme);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		setContentView(R.layout.efp__main_activity);
@@ -92,8 +93,11 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 
 		Intent intent = getIntent();
 		s_onlyOneItem = intent.getBooleanExtra(ExFilePicker.SET_ONLY_ONE_ITEM, false);
-		if (intent.hasExtra(ExFilePicker.SET_FILTER_BY_EXTENSION)) {
-			s_filterByType = Arrays.asList(intent.getStringArrayExtra(ExFilePicker.SET_FILTER_BY_EXTENSION));
+		if (intent.hasExtra(ExFilePicker.SET_FILTER_EXCLUDE)) {
+			s_filterExclude = Arrays.asList(intent.getStringArrayExtra(ExFilePicker.SET_FILTER_EXCLUDE));
+		}
+		if (intent.hasExtra(ExFilePicker.SET_FILTER_LISTED)) {
+			s_filterListed = Arrays.asList(intent.getStringArrayExtra(ExFilePicker.SET_FILTER_LISTED));
 		}
 		s_choiceType = intent.getIntExtra(ExFilePicker.SET_CHOICE_TYPE, ExFilePicker.CHOICE_TYPE_ALL);
 
@@ -190,6 +194,7 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 						list.add("/");
 					} else {
 						parent = parentFile.getAbsolutePath();
+						if (!parent.endsWith("/")) parent += "/";
 						list.add(currentDirectory.getName());
 					}
 					ExFilePickerParcelObject object = new ExFilePickerParcelObject(parent, list, 1);
@@ -334,7 +339,11 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 		if (files != null) {
 			for (int i = 0; i < files.length; i++) {
 				if (s_choiceType == ExFilePicker.CHOICE_TYPE_DIRECTORIES && !files[i].isDirectory()) continue;
-				if (s_filterByType != null && files[i].isFile() && s_filterByType.contains(getFileExtension(files[i].getName()))) continue;
+				if (files[i].isFile()) {
+					String extension = getFileExtension(files[i].getName());
+					if(s_filterListed != null && !s_filterListed.contains(extension)) continue;
+					if(s_filterExclude != null && s_filterExclude.contains(extension)) continue;
+				}
 				filesList.add(files[i]);
 			}
 		}
@@ -355,10 +364,10 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 
 	private void setMenuItemView() {
 		if (absListView.getId() == R.id.gridview) {
-			change_view.setImageResource(R.drawable.efp__ic_action_list);
+			change_view.setImageResource(attrToResId(R.attr.efp__ic_action_list));
 			change_view.setContentDescription(getString(R.string.action_list));
 		} else {
-			change_view.setImageResource(R.drawable.efp__ic_action_grid);
+			change_view.setImageResource(attrToResId(R.attr.efp__ic_action_grid));
 			change_view.setContentDescription(getString(R.string.action_grid));
 		}
 	}
@@ -445,7 +454,12 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 	}
 
 	private void setItemBackground(View view, boolean state) {
-		view.setBackgroundResource(state ? R.drawable.efp__list_activated_holo : 0);
+		view.setBackgroundResource(state ? attrToResId(R.attr.efp__selected_item_background) : 0);
+	}
+	
+	int attrToResId(int attr) {
+		TypedArray a = getTheme().obtainStyledAttributes(new int[] { attr });
+		return a.getResourceId(0, 0);
 	}
 
 	@SuppressLint("DefaultLocale")

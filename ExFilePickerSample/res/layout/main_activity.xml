@@ -13,11 +13,17 @@
         android:text="@string/only_one_item" />
 
     <CheckBox
-        android:id="@+id/filter_jpeg"
+        android:id="@+id/filter_listed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/filter_jpeg" />
+        android:text="@string/filter_listed" />
 
+    <CheckBox
+        android:id="@+id/filter_exclude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/filter_exclude" />
+    
     <CheckBox
         android:id="@+id/disable_new_folder_button"
         android:layout_width="wrap_content"

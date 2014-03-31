@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ExFilePicker</string>
+    <string name="action_grid">Tīkls</string>
+    <string name="action_list">Saraksts</string>
+
+    <string-array name="size_units">
+        <item>B</item>
+        <item>kB</item>
+        <item>mB</item>
+        <item>gB</item>
+        <item>tB</item>
+        <item>pB</item>
+    </string-array>
+
+    <string name="empty_directory">Mape ir tukša</string>
+    <string name="action_select_all">Izvēlēties visu</string>
+    <string name="action_deselect">Noņemt iezīmēšanu</string>
+    <string name="action_invert_selection">Invertēt iezīmēšanu</string>
+    <string name="new_folder">Jauna mape</string>
+    <string name="folder_name_hint">Mapes nosaukums</string>
+    <string name="folder_created">Mape veiksmīgi izveidota</string>
+    <string name="folder_not_created">Klūda! Mape nav izveidota</string>
+    <string name="folder_already_exists">Mape jau eksistē</string>
+
+</resources>

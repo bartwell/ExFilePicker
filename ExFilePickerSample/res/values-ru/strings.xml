@@ -4,7 +4,8 @@
     <string name="app_name">ExFilePicker Sample</string>
     <string name="choose_files">Выбрать файлы</string>
     <string name="only_one_item">Единичный выбор</string>
-    <string name="filter_jpeg">Не показывать *.jpeg и *.jpg</string>
+    <string name="filter_listed">Показывать только *.jpeg и *.jpg</string>
+    <string name="filter_exclude">Не показывать *.jpg</string>
     <string name="choice_type_all">Все</string>
     <string name="choice_type_files">Только файлы</string>
     <string name="choice_type_directories">Только папки</string>

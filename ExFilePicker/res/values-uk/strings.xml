@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ExFilePicker</string>
+    <string name="action_grid">Сітка</string>
+    <string name="action_list">Список</string>
+
+    <string-array name="size_units">
+        <item>Б</item>
+        <item>кБ</item>
+        <item>мБ</item>
+        <item>гБ</item>
+        <item>тБ</item>
+        <item>пБ</item>
+    </string-array>
+
+    <string name="empty_directory">Ця тека порожня</string>
+    <string name="action_select_all">Виділити все</string>
+    <string name="action_deselect">Зняти виділення</string>
+    <string name="action_invert_selection">Інвертувати виділення</string>
+    <string name="new_folder">Нова тека</string>
+    <string name="folder_name_hint">Ім’я теки</string>
+    <string name="folder_created">Тека успішно створена</string>
+    <string name="folder_not_created">Помилка! Тека не створена</string>
+    <string name="folder_already_exists">Тека вже існує</string>
+
+</resources>
