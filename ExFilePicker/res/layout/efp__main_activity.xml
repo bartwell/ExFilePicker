@@ -16,7 +16,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layout_toLeftOf="@+id/menu_sort"
+            android:layout_toLeftOf="@+id/menu_sort1"
             android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="?android:attr/textAppearanceLarge" />
