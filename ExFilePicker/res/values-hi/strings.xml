@@ -23,5 +23,15 @@
     <string name="folder_created">फ़ोल्डर सफलतापूर्वक बनाया</string>
     <string name="folder_not_created">त्रुटि! फ़ोल्डर नहीं बनाया</string>
     <string name="folder_already_exists">फ़ोल्डर पहले से मौजूद है</string>
+    <string name="sort">क्रम</string>
+
+    <string-array name="sorting_types">
+        <item>नाम तक, आरोही</item>
+        <item>नाम तक, घटते</item>
+        <item>आकार तक, आरोही</item>
+        <item>आकार तक, घटत</item>
+        <item>तारीख तक, आरोही</item>
+        <item>तारीख तक, घटत</item>
+    </string-array>
 
 </resources>

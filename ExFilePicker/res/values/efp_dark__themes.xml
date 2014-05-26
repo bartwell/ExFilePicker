@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="ExFilePickerThemeDark" parent="@style/_ExFilePickerThemeDark" />
@@ -20,6 +19,7 @@
         <item name="efp__ic_action_new_folder">@drawable/efp_dark__ic_action_new_folder</item>
         <item name="efp__ic_action_ok">@drawable/efp_dark__ic_action_ok</item>
         <item name="efp__ic_action_select_all">@drawable/efp_dark__ic_action_select_all</item>
+        <item name="efp__ic_action_sort">@drawable/efp_dark__ic_action_sort</item>
     </style>
 
 </resources>

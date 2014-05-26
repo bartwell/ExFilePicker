@@ -16,10 +16,21 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layout_toLeftOf="@+id/menu_new_folder"
+            android:layout_toLeftOf="@+id/menu_sort"
             android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <ImageButton
+            android:id="@+id/menu_sort1"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/menu_new_folder"
+            android:background="@drawable/efp__header_buttons_selector"
+            android:contentDescription="@string/sort"
+            android:scaleType="center"
+            android:src="?attr/efp__ic_action_sort" />
 
         <ImageButton
             android:id="@+id/menu_new_folder"
@@ -63,7 +74,6 @@
             android:contentDescription="@string/action_grid"
             android:scaleType="center"
             android:src="?attr/efp__ic_action_grid" />
-
     </RelativeLayout>
 
     <RelativeLayout
@@ -134,6 +144,17 @@
             android:contentDescription="@string/action_select_all"
             android:scaleType="center"
             android:src="?attr/efp__ic_action_select_all" />
+
+        <ImageButton
+            android:id="@+id/menu_sort2"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/menu_select_all"
+            android:background="@drawable/efp__header_buttons_selector"
+            android:contentDescription="@string/sort"
+            android:scaleType="center"
+            android:src="?attr/efp__ic_action_sort" />
 
         <View
             android:layout_width="1dip"

@@ -23,5 +23,15 @@
     <string name="folder_created">تم انشاء الملف بنجاح</string>
     <string name="folder_not_created">خطأ! لم يتم انشاء المجلد</string>
     <string name="folder_already_exists">المجلد موجود مسبقا</string>
+    <string name="sort">رتب</string>
+
+    <string-array name="sorting_types">
+        <item>بالاسم، تصاعدي</item>
+        <item>بالاسم، تنازلي</item>
+        <item>حسب الحجم، تصاعدي</item>
+        <item>حسب الحجم، تنازلي</item>
+        <item>بواسطة التاريخ، تصاعدي</item>
+        <item>بواسطة التاريخ، تنازلي</item>
+    </string-array>
 
 </resources>

@@ -23,5 +23,15 @@
     <string name="folder_created">Папка успешно создана</string>
     <string name="folder_not_created">Ошибка! Папка не создана</string>
     <string name="folder_already_exists">Папка уже существует</string>
+    <string name="sort">Сортировать</string>
+
+    <string-array name="sorting_types">
+        <item>По имени, по возрастанию</item>
+        <item>По имени, по убыванию</item>
+        <item>По размеру, по возрастанию</item>
+        <item>По размеру, по убыванию</item>
+        <item>По дате, по возрастанию</item>
+        <item>По дате, по убыванию</item>
+    </string-array>
 
 </resources>

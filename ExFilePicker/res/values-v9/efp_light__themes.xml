@@ -14,6 +14,7 @@
         <item name="efp__ic_action_new_folder">@drawable/efp_light__ic_action_new_folder</item>
         <item name="efp__ic_action_ok">@drawable/efp_light__ic_action_ok</item>
         <item name="efp__ic_action_select_all">@drawable/efp_light__ic_action_select_all</item>
+        <item name="efp__ic_action_sort">@drawable/efp_light__ic_action_sort</item>
     </style>
 
 </resources>

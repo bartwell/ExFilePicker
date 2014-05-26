@@ -23,5 +23,15 @@
     <string name="folder_created">Kaust on edukalt loodud</string>
     <string name="folder_not_created">Viga! Kausta ei ole loodud</string>
     <string name="folder_already_exists">Kaust juba eksisteerib</string>
+    <string name="sort">Sort</string>
+
+    <string-array name="sorting_types">
+        <item>Nime järgi, kasvavalt</item>
+        <item>Nime järgi, kahanevalt</item>
+        <item>Suuruse järgi, kasvavalt</item>
+        <item>Suuruse järgi, kahanevalt</item>
+        <item>Kuupäeva järgi, kasvavalt</item>
+        <item>Kuupäeva järgi, kahanevalt</item>
+    </string-array>
 
 </resources>

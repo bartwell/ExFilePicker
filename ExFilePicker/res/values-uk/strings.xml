@@ -23,5 +23,15 @@
     <string name="folder_created">Тека успішно створена</string>
     <string name="folder_not_created">Помилка! Тека не створена</string>
     <string name="folder_already_exists">Тека вже існує</string>
+    <string name="sort">Сортувати</string>
+
+    <string-array name="sorting_types">
+        <item>По імені, по зростанню</item>
+        <item>По імені, по убуванню</item>
+        <item>По розміру, по зростанню</item>
+        <item>По розміру, по убуванню</item>
+        <item>За датою, по зростанню</item>
+        <item>За датою, по убуванню</item>
+    </string-array>
 
 </resources>

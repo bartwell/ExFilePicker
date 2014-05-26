@@ -62,6 +62,7 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 	private List<String> s_filterExclude;
 	private List<String> s_filterListed;
 	private int s_choiceType;
+	private int s_sortType;
 
 	private LruCache<String, Bitmap> bitmapsCache;
 
@@ -156,6 +157,55 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 			});
 			new_folder.setOnLongClickListener(this);
 		} else new_folder.setVisibility(ImageButton.GONE);
+
+		s_sortType = intent.getIntExtra(ExFilePicker.SET_SORT_TYPE, ExFilePicker.SORT_NAME_ASC);
+
+		ImageButton sort1 = (ImageButton) findViewById(R.id.menu_sort1);
+		ImageButton sort2 = (ImageButton) findViewById(R.id.menu_sort2);
+		if (!intent.getBooleanExtra(ExFilePicker.DISABLE_SORT_BUTTON, false)) {
+			OnClickListener listener = new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					AlertDialog.Builder alert = new AlertDialog.Builder(ExFilePickerActivity.this);
+					alert.setTitle(R.string.sort);
+					alert.setItems(R.array.sorting_types, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							switch (which) {
+							case 0:
+								s_sortType = ExFilePicker.SORT_NAME_ASC;
+								break;
+							case 1:
+								s_sortType = ExFilePicker.SORT_NAME_DESC;
+								break;
+							case 2:
+								s_sortType = ExFilePicker.SORT_SIZE_ASC;
+								break;
+							case 3:
+								s_sortType = ExFilePicker.SORT_SIZE_DESC;
+								break;
+							case 4:
+								s_sortType = ExFilePicker.SORT_DATE_ASC;
+								break;
+							case 5:
+								s_sortType = ExFilePicker.SORT_DATE_DESC;
+								break;
+
+							}
+							sort();
+						}
+					});
+					alert.show();
+				}
+			};
+			sort1.setOnClickListener(listener);
+			sort1.setOnLongClickListener(this);
+			sort2.setOnClickListener(listener);
+			sort2.setOnLongClickListener(this);
+		} else {
+			sort1.setVisibility(ImageButton.GONE);
+			sort2.setVisibility(ImageButton.GONE);
+		}
 
 		change_view = (ImageButton) findViewById(R.id.menu_change_view);
 		setMenuItemView();
@@ -341,13 +391,17 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 				if (s_choiceType == ExFilePicker.CHOICE_TYPE_DIRECTORIES && !files[i].isDirectory()) continue;
 				if (files[i].isFile()) {
 					String extension = getFileExtension(files[i].getName());
-					if(s_filterListed != null && !s_filterListed.contains(extension)) continue;
-					if(s_filterExclude != null && s_filterExclude.contains(extension)) continue;
+					if (s_filterListed != null && !s_filterListed.contains(extension)) continue;
+					if (s_filterExclude != null && s_filterExclude.contains(extension)) continue;
 				}
 				filesList.add(files[i]);
 			}
 		}
 
+		sort();
+	}
+
+	private void sort() {
 		Collections.sort(filesList, new Comparator<File>() {
 			@Override
 			public int compare(File file1, File file2) {
@@ -355,10 +409,22 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 				boolean isDirectory2 = file2.isDirectory();
 				if (isDirectory1 && !isDirectory2) return -1;
 				if (!isDirectory1 && isDirectory2) return 1;
+				switch (s_sortType) {
+				case ExFilePicker.SORT_NAME_DESC:
+					return file2.getName().toLowerCase(Locale.getDefault()).compareTo(file1.getName().toLowerCase(Locale.getDefault()));
+				case ExFilePicker.SORT_SIZE_ASC:
+					return Long.valueOf(file1.length()).compareTo(Long.valueOf(file2.length()));
+				case ExFilePicker.SORT_SIZE_DESC:
+					return Long.valueOf(file2.length()).compareTo(Long.valueOf(file1.length()));
+				case ExFilePicker.SORT_DATE_ASC:
+					return Long.valueOf(file1.lastModified()).compareTo(Long.valueOf(file2.lastModified()));
+				case ExFilePicker.SORT_DATE_DESC:
+					return Long.valueOf(file2.lastModified()).compareTo(Long.valueOf(file1.lastModified()));
+				}
+				// Default, ExFilePicker.SORT_NAME_ASC
 				return file1.getName().toLowerCase(Locale.getDefault()).compareTo(file2.getName().toLowerCase(Locale.getDefault()));
 			}
 		});
-
 		((BaseAdapter) absListView.getAdapter()).notifyDataSetChanged();
 	}
 
@@ -456,7 +522,7 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 	private void setItemBackground(View view, boolean state) {
 		view.setBackgroundResource(state ? attrToResId(R.attr.efp__selected_item_background) : 0);
 	}
-	
+
 	int attrToResId(int attr) {
 		TypedArray a = getTheme().obtainStyledAttributes(new int[] { attr });
 		return a.getResourceId(0, 0);

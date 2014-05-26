@@ -1,8 +1,10 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
     android:id="@+id/LinearLayout1"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="7dp" >
 
@@ -29,6 +31,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/disable_new_folder_button" />
+    
+    <CheckBox
+        android:id="@+id/disable_sort_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/disable_sort_button" />
 
     <TextView
         android:id="@+id/textView2"
@@ -77,3 +85,4 @@
         android:layout_height="wrap_content" />
 
 </LinearLayout>
+</ScrollView>

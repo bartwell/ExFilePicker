@@ -23,5 +23,15 @@
     <string name="folder_created">フォルダが正常に作成されました。</string>
     <string name="folder_not_created">エラー! フォルダが作成されませんでした。</string>
     <string name="folder_already_exists">フォルダが既に存在します。</string>
+    <string name="sort">ソート</string>
+
+    <string-array name="sorting_types">
+        <item>名前で、上昇</item>
+        <item>名前で、下行</item>
+        <item>サイズによって、上昇</item>
+        <item>サイズによって、下行</item>
+        <item>日付順、上昇</item>
+        <item>日付順、下行</item>
+    </string-array>
 
 </resources>

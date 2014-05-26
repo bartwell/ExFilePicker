@@ -14,6 +14,7 @@ It can:
 * Choose one directory
 * Choose few files and/or directories
 * Filter by file extension
+* Sorting
 * Creating directories
 
 ## Usage
@@ -80,6 +81,10 @@ ExFilePicker can be configurated via intent extras.
 * SET_START_DIRECTORY - String. This path will be open when ExFilePicker activity will called.
 
 * DISABLE_NEW_FOLDER_BUTTON - boolean; if true, button "New folder" will not showing.
+
+* DISABLE_SORT_BUTTON - boolean; if true, button "Sort" will not showing.
+
+* SET_SORT_TYPE - int; one of SORT_NAME_ASC, SORT_NAME_DESC, SORT_SIZE_ASC, SORT_SIZE_DESC, SORT_DATE_ASC or SORT_DATE_DESC. Set default sorting. SORT_NAME_ASC by default.
 
 Look example in ExFilePickerSample.
 

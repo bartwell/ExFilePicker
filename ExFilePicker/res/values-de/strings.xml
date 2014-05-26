@@ -23,5 +23,15 @@
     <string name="folder_created">Ordner ist erfolgreich erstellt</string>
     <string name="folder_not_created">Fehler! Ordner konnte nicht erstellt werden</string>
     <string name="folder_already_exists">Ordner ist bereits vorhanden</string>
+    <string name="sort">Sortieren</string>
+
+    <string-array name="sorting_types">
+        <item>Nach Name, aufsteigend</item>
+        <item>Nach Name, absteigend</item>
+        <item>Nach Größe, aufsteigend</item>
+        <item>Nach Größe, absteigend</item>
+        <item>Nach Datum, aufsteigend</item>
+        <item>Nach Datum, absteigend</item>
+    </string-array>
 
 </resources>
