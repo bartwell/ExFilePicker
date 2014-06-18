@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ExFilePicker</string>
-    <string name="action_grid">Cuadrícula</string>
-    <string name="action_list">Lista</string>
+    <string name="efp__app_name">ExFilePicker</string>
+    <string name="efp__action_grid">Cuadrícula</string>
+    <string name="efp__action_list">Lista</string>
 
-    <string-array name="size_units">
+    <string-array name="efp__size_units">
         <item>B</item>
         <item>kB</item>
         <item>mB</item>
@@ -14,18 +14,18 @@
         <item>pB</item>
     </string-array>
 
-    <string name="empty_directory">Esta carpeta está vacía</string>
-    <string name="action_select_all">Seleccionar todo</string>
-    <string name="action_deselect">Deseleccionar</string>
-    <string name="action_invert_selection">Invertir selección</string>
-    <string name="new_folder">Nueva carpeta</string>
-    <string name="folder_name_hint">Nombre de la carpeta</string>
-    <string name="folder_created">Carpeta creada con éxito</string>
-    <string name="folder_not_created">Error! No se crea la carpeta</string>
-    <string name="folder_already_exists">La carpeta ya existe</string>
-    <string name="sort">Ordenar</string>
+    <string name="efp__empty_directory">Esta carpeta está vacía</string>
+    <string name="efp__action_select_all">Seleccionar todo</string>
+    <string name="efp__action_deselect">Deseleccionar</string>
+    <string name="efp__action_invert_selection">Invertir selección</string>
+    <string name="efp__new_folder">Nueva carpeta</string>
+    <string name="efp__folder_name_hint">Nombre de la carpeta</string>
+    <string name="efp__folder_created">Carpeta creada con éxito</string>
+    <string name="efp__folder_not_created">Error! No se crea la carpeta</string>
+    <string name="efp__folder_already_exists">La carpeta ya existe</string>
+    <string name="efp__sort">Ordenar</string>
 
-    <string-array name="sorting_types">
+    <string-array name="efp__sorting_types">
         <item>Por nombre, ascendente</item>
         <item>Por nombre, descendente</item>
         <item>Por tamaño, ascendente</item>

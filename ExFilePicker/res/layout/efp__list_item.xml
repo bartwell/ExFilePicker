@@ -17,7 +17,7 @@
             android:layout_height="60dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/efp__app_name"
             android:scaleType="centerInside"
             android:src="@android:drawable/stat_sys_download_done" />
 
@@ -29,7 +29,7 @@
             android:layout_marginLeft="7dp"
             android:layout_marginTop="7dp"
             android:layout_toRightOf="@+id/thumbnail"
-            android:text="@string/app_name"
+            android:text="@string/efp__app_name"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/filename"
             android:layout_below="@+id/filename"
-            android:text="@string/app_name"
+            android:text="@string/efp__app_name"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <CheckBox

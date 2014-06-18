@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ExFilePicker</string>
-    <string name="action_grid">ग्रिड</string>
-    <string name="action_list">सूची</string>
+    <string name="efp__app_name">ExFilePicker</string>
+    <string name="efp__action_grid">ग्रिड</string>
+    <string name="efp__action_list">सूची</string>
 
-    <string-array name="size_units">
+    <string-array name="efp__size_units">
         <item>बी</item>
         <item>केबी</item>
         <item>एमबी</item>
@@ -14,18 +14,18 @@
         <item>पीबी</item>
     </string-array>
 
-    <string name="empty_directory">इस निर्देशिका खाली है</string>
-    <string name="action_select_all">सभी का चयन करें</string>
-    <string name="action_deselect">अचयनित</string>
-    <string name="action_invert_selection">उलटा चयन</string>
-    <string name="new_folder">नई फ़ोल्डर</string>
-    <string name="folder_name_hint">फ़ोल्डर का नाम</string>
-    <string name="folder_created">फ़ोल्डर सफलतापूर्वक बनाया</string>
-    <string name="folder_not_created">त्रुटि! फ़ोल्डर नहीं बनाया</string>
-    <string name="folder_already_exists">फ़ोल्डर पहले से मौजूद है</string>
-    <string name="sort">क्रम</string>
+    <string name="efp__empty_directory">इस निर्देशिका खाली है</string>
+    <string name="efp__action_select_all">सभी का चयन करें</string>
+    <string name="efp__action_deselect">अचयनित</string>
+    <string name="efp__action_invert_selection">उलटा चयन</string>
+    <string name="efp__new_folder">नई फ़ोल्डर</string>
+    <string name="efp__folder_name_hint">फ़ोल्डर का नाम</string>
+    <string name="efp__folder_created">फ़ोल्डर सफलतापूर्वक बनाया</string>
+    <string name="efp__folder_not_created">त्रुटि! फ़ोल्डर नहीं बनाया</string>
+    <string name="efp__folder_already_exists">फ़ोल्डर पहले से मौजूद है</string>
+    <string name="efp__sort">क्रम</string>
 
-    <string-array name="sorting_types">
+    <string-array name="efp__sorting_types">
         <item>नाम तक, आरोही</item>
         <item>नाम तक, घटते</item>
         <item>आकार तक, आरोही</item>

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ru.bartwell.exfilepicker"
-    android:versionCode="6"
-    android:versionName="1.5" >
+    android:versionCode="7"
+    android:versionName="1.6" >
 
     <uses-sdk
         android:minSdkVersion="4"
@@ -9,7 +9,7 @@
 
     <application
         android:icon="@drawable/efp__ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/efp__app_name"
         android:theme="@style/ExFilePickerThemeDark" >
     </application>
 

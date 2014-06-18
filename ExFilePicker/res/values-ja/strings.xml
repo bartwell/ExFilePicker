@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ExFilePicker</string>
-    <string name="action_grid">グリッド</string>
-    <string name="action_list">リスト</string>
+    <string name="efp__app_name">ExFilePicker</string>
+    <string name="efp__action_grid">グリッド</string>
+    <string name="efp__action_list">リスト</string>
 
-    <string-array name="size_units">
+    <string-array name="efp__size_units">
         <item>B</item>
         <item>kB</item>
         <item>mB</item>
@@ -14,18 +14,18 @@
         <item>pB</item>
     </string-array>
 
-    <string name="empty_directory">このフォルダは空です。</string>
-    <string name="action_select_all">すべて選択</string>
-    <string name="action_deselect">選択解除</string>
-    <string name="action_invert_selection">選択を反転</string>
-    <string name="new_folder">新しいフォルダ</string>
-    <string name="folder_name_hint">フォルダ名</string>
-    <string name="folder_created">フォルダが正常に作成されました。</string>
-    <string name="folder_not_created">エラー! フォルダが作成されませんでした。</string>
-    <string name="folder_already_exists">フォルダが既に存在します。</string>
-    <string name="sort">ソート</string>
+    <string name="efp__empty_directory">このフォルダは空です。</string>
+    <string name="efp__action_select_all">すべて選択</string>
+    <string name="efp__action_deselect">選択解除</string>
+    <string name="efp__action_invert_selection">選択を反転</string>
+    <string name="efp__new_folder">新しいフォルダ</string>
+    <string name="efp__folder_name_hint">フォルダ名</string>
+    <string name="efp__folder_created">フォルダが正常に作成されました。</string>
+    <string name="efp__folder_not_created">エラー! フォルダが作成されませんでした。</string>
+    <string name="efp__folder_already_exists">フォルダが既に存在します。</string>
+    <string name="efp__sort">ソート</string>
 
-    <string-array name="sorting_types">
+    <string-array name="efp__sorting_types">
         <item>名前で、上昇</item>
         <item>名前で、下行</item>
         <item>サイズによって、上昇</item>

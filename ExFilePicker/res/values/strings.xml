@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ExFilePicker</string>
-    <string name="action_grid">Grid</string>
-    <string name="action_list">List</string>
+    <string name="efp__app_name">ExFilePicker</string>
+    <string name="efp__action_grid">Grid</string>
+    <string name="efp__action_list">List</string>
 
-    <string-array name="size_units">
+    <string-array name="efp__size_units">
         <item>B</item>
         <item>kB</item>
         <item>mB</item>
@@ -14,17 +14,17 @@
         <item>pB</item>
     </string-array>
 
-    <string name="empty_directory">This directory is empty</string>
-    <string name="action_select_all">Select all</string>
-    <string name="action_deselect">Deselect</string>
-    <string name="action_invert_selection">Invert selection</string>
-    <string name="new_folder">New folder</string>
-    <string name="folder_name_hint">Folder name</string>
-    <string name="folder_created">Folder created successfully</string>
-    <string name="folder_not_created">Error! Folder isn\'t created</string>
-    <string name="folder_already_exists">Folder already exists</string>
-    <string name="sort">Sort</string>
-    <string-array name="sorting_types">
+    <string name="efp__empty_directory">This directory is empty</string>
+    <string name="efp__action_select_all">Select all</string>
+    <string name="efp__action_deselect">Deselect</string>
+    <string name="efp__action_invert_selection">Invert selection</string>
+    <string name="efp__new_folder">New folder</string>
+    <string name="efp__folder_name_hint">Folder name</string>
+    <string name="efp__folder_created">Folder created successfully</string>
+    <string name="efp__folder_not_created">Error! Folder isn\'t created</string>
+    <string name="efp__folder_already_exists">Folder already exists</string>
+    <string name="efp__sort">Sort</string>
+    <string-array name="efp__sorting_types">
         <item>By name, ascending</item>
         <item>By name, descending</item>
         <item>By size, ascending</item>

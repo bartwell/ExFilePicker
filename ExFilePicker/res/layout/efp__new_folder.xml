@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:ems="10"
-        android:hint="@string/folder_name_hint"
+        android:hint="@string/efp__folder_name_hint"
         android:inputType="text"
         android:maxLines="1" >
 

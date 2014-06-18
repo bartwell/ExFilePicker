@@ -131,7 +131,7 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 				@Override
 				public void onClick(View v) {
 					AlertDialog.Builder alert = new AlertDialog.Builder(ExFilePickerActivity.this);
-					alert.setTitle(R.string.new_folder);
+					alert.setTitle(R.string.efp__new_folder);
 					View alertView = LayoutInflater.from(ExFilePickerActivity.this).inflate(R.layout.efp__new_folder, null);
 					final TextView name = (TextView) alertView.findViewById(R.id.name);
 					alert.setView(alertView);
@@ -140,13 +140,13 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 						public void onClick(DialogInterface dialog, int which) {
 							if (name.length() > 0) {
 								File file = new File(currentDirectory, name.getText().toString());
-								if (file.exists()) Toast.makeText(ExFilePickerActivity.this, R.string.folder_already_exists, Toast.LENGTH_SHORT).show();
+								if (file.exists()) Toast.makeText(ExFilePickerActivity.this, R.string.efp__folder_already_exists, Toast.LENGTH_SHORT).show();
 								else {
 									file.mkdir();
 									if (file.isDirectory()) {
 										readDirectory(currentDirectory);
-										Toast.makeText(ExFilePickerActivity.this, R.string.folder_created, Toast.LENGTH_SHORT).show();
-									} else Toast.makeText(ExFilePickerActivity.this, R.string.folder_not_created, Toast.LENGTH_SHORT).show();
+										Toast.makeText(ExFilePickerActivity.this, R.string.efp__folder_created, Toast.LENGTH_SHORT).show();
+									} else Toast.makeText(ExFilePickerActivity.this, R.string.efp__folder_not_created, Toast.LENGTH_SHORT).show();
 								}
 							}
 						}
@@ -167,8 +167,8 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 				@Override
 				public void onClick(View v) {
 					AlertDialog.Builder alert = new AlertDialog.Builder(ExFilePickerActivity.this);
-					alert.setTitle(R.string.sort);
-					alert.setItems(R.array.sorting_types, new DialogInterface.OnClickListener() {
+					alert.setTitle(R.string.efp__sort);
+					alert.setItems(R.array.efp__sorting_types, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							switch (which) {
@@ -431,10 +431,10 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 	private void setMenuItemView() {
 		if (absListView.getId() == R.id.gridview) {
 			change_view.setImageResource(attrToResId(R.attr.efp__ic_action_list));
-			change_view.setContentDescription(getString(R.string.action_list));
+			change_view.setContentDescription(getString(R.string.efp__action_list));
 		} else {
 			change_view.setImageResource(attrToResId(R.attr.efp__ic_action_grid));
-			change_view.setContentDescription(getString(R.string.action_grid));
+			change_view.setContentDescription(getString(R.string.efp__action_grid));
 		}
 	}
 
@@ -616,7 +616,7 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 		}
 
 		String getHumanFileSize(long size) {
-			String[] units = getResources().getStringArray(R.array.size_units);
+			String[] units = getResources().getStringArray(R.array.efp__size_units);
 			for (int i = units.length - 1; i >= 0; i--) {
 				if (size >= Math.pow(1024, i)) {
 					return Math.round((size / Math.pow(1024, i))) + " " + units[i];

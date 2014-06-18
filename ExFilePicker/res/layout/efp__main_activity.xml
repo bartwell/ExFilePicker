@@ -28,7 +28,7 @@
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/menu_new_folder"
             android:background="@drawable/efp__header_buttons_selector"
-            android:contentDescription="@string/sort"
+            android:contentDescription="@string/efp__sort"
             android:scaleType="center"
             android:src="?attr/efp__ic_action_sort" />
 
@@ -39,7 +39,7 @@
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/menu_change_view"
             android:background="@drawable/efp__header_buttons_selector"
-            android:contentDescription="@string/new_folder"
+            android:contentDescription="@string/efp__new_folder"
             android:scaleType="center"
             android:src="?attr/efp__ic_action_new_folder" />
 
@@ -71,7 +71,7 @@
             android:layout_alignWithParentIfMissing="true"
             android:layout_toLeftOf="@+id/ok1_delimiter"
             android:background="@drawable/efp__header_buttons_selector"
-            android:contentDescription="@string/action_grid"
+            android:contentDescription="@string/efp__action_grid"
             android:scaleType="center"
             android:src="?attr/efp__ic_action_grid" />
     </RelativeLayout>
@@ -119,7 +119,7 @@
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/view1"
             android:background="@drawable/efp__header_buttons_selector"
-            android:contentDescription="@string/action_invert_selection"
+            android:contentDescription="@string/efp__action_invert_selection"
             android:scaleType="center"
             android:src="?attr/efp__ic_action_invert_selection" />
 
@@ -130,7 +130,7 @@
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/menu_invert"
             android:background="@drawable/efp__header_buttons_selector"
-            android:contentDescription="@string/action_deselect"
+            android:contentDescription="@string/efp__action_deselect"
             android:scaleType="center"
             android:src="?attr/efp__ic_action_deselect" />
 
@@ -141,7 +141,7 @@
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/menu_deselect"
             android:background="@drawable/efp__header_buttons_selector"
-            android:contentDescription="@string/action_select_all"
+            android:contentDescription="@string/efp__action_select_all"
             android:scaleType="center"
             android:src="?attr/efp__ic_action_select_all" />
 
@@ -152,7 +152,7 @@
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/menu_select_all"
             android:background="@drawable/efp__header_buttons_selector"
-            android:contentDescription="@string/sort"
+            android:contentDescription="@string/efp__sort"
             android:scaleType="center"
             android:src="?attr/efp__ic_action_sort" />
 
