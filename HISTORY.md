@@ -1,3 +1,7 @@
+### v1.6
+	* Changed icons select_all and invert_selection 
+	* All strings resources in the library get efp__ prefix
+
 ### v1.5
 	* Added "Sort" button and two options: SET_SORT_TYPE and DISABLE_SORT_BUTTON 
 
