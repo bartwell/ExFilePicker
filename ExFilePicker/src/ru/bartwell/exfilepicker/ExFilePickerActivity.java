@@ -101,6 +101,8 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 			s_filterListed = Arrays.asList(intent.getStringArrayExtra(ExFilePicker.SET_FILTER_LISTED));
 		}
 		s_choiceType = intent.getIntExtra(ExFilePicker.SET_CHOICE_TYPE, ExFilePicker.CHOICE_TYPE_ALL);
+		
+		s_sortType = intent.getIntExtra(ExFilePicker.SET_SORT_TYPE, ExFilePicker.SORT_NAME_ASC);
 
 		emptyView = getLayoutInflater().inflate(R.layout.efp__empty, null);
 		addContentView(emptyView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -157,8 +159,6 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 			});
 			new_folder.setOnLongClickListener(this);
 		} else new_folder.setVisibility(ImageButton.GONE);
-
-		s_sortType = intent.getIntExtra(ExFilePicker.SET_SORT_TYPE, ExFilePicker.SORT_NAME_ASC);
 
 		ImageButton sort1 = (ImageButton) findViewById(R.id.menu_sort1);
 		ImageButton sort2 = (ImageButton) findViewById(R.id.menu_sort2);
