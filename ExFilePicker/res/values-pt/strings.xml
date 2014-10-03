@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="efp__app_name">ExFilePicker</string>
+    <string name="efp__action_grid">Grade</string>
+	<string name="efp__action_list">Lista</string>
+
+    <string-array name="efp__size_units">
+        <item>B</item>
+		<item>kB</item>
+		<item>mB</item>
+		<item>gB</item>
+		<item>tB</item>
+		<item>pB</item>
+    </string-array>
+
+	<string name="efp__empty_directory">Essa pasta está vazia.</string>
+	<string name="efp__action_select_all">Selecionar tudo</string>
+	<string name="efp__action_deselect">Desmarcar</string>
+	<string name="efp__action_invert_selection">Inverter seleção</string>
+	<string name="efp__new_folder">Nova pasta</string>
+	<string name="efp__folder_name_hint">Nome da pasta</string>
+	<string name="efp__folder_created">Pasta criada com sucesso</string>
+	<string name="efp__folder_not_created">Erro! Pasta não foi criada</string>
+	<string name="efp__folder_already_exists">Pasta já existe</string>
+	<string name="efp__sort">Classificar</string>
+
+    <string-array name="efp__sorting_types">
+        <item>Por nome, crescente</item>
+		<item>Por nome, decrescente</item>
+		<item>Por tamanho, crescente</item>
+		<item>Por tamanho, decrescente</item>
+		<item>Por data, crescente</item>
+		<item>Por data, decrescente</item>
+    </string-array>
+
+</resources>
