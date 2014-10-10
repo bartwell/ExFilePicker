@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+
+	<string name="efp__app_name">ExFilePicker</string>
+	<string name="efp__action_grid">Izgara</string>
+	<string name="efp__action_list">Liste</string>
+	
+	<string-array name="efp__size_units">
+	<item>B</item>
+	<item>kB</item>
+	<item>mB</item>
+	<item>gB</item>
+	<item>tB</item>
+	<item>pB</item>
+	</string-array>
+	
+	<string name="efp__empty_directory">Bu klasör boş</string>
+	<string name="efp__action_select_all">Hepsini seç</string>
+	<string name="efp__action_deselect">Seçimi kaldır</string>
+	<string name="efp__action_invert_selection">Seçimi tersine çevir</string>
+	<string name="efp__new_folder">Yeni klasör</string>
+	<string name="efp__folder_name_hint">Klasör ismi</string>
+	<string name="efp__folder_created">Klasör başarıyla oluşturuldu</string>
+	<string name="efp__folder_not_created">Hata! Klasör oluşturulmadı</string>
+	<string name="efp__folder_already_exists">Klasör zaten var</string>
+	<string name="efp__sort">Sırala</string>
+	
+	<string-array name="efp__sorting_types">
+		<item>İsme göre, artan</item>
+		<item>isme göre, azalan</item>
+		<item>Boyuta göre, artan</item>
+		<item>Boyuta göre, azalan</item>
+		<item>Tarihe göre, artan</item>
+		<item>Tarihe göre, azalan</item>
+	</string-array>
+
+</resources>
