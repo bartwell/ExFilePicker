@@ -9,6 +9,7 @@ public class ExFilePicker {
 	public final static String SET_SORT_TYPE = "SortType";
 	public final static String DISABLE_NEW_FOLDER_BUTTON = "DisableNewFolderButton";
 	public final static String DISABLE_SORT_BUTTON = "DisableSortButton";
+	public final static String ENABLE_QUIT_BUTTON = "EnableCancelButton";
 
 	public final static int CHOICE_TYPE_ALL = 0;
 	public final static int CHOICE_TYPE_FILES = 1;

@@ -7,16 +7,28 @@
         android:id="@+id/header1"
         android:layout_width="match_parent"
         android:layout_height="48dp" >
+        
+        <ImageButton
+            android:id="@+id/menu_cancel1"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/efp__header_buttons_selector"
+            android:contentDescription="@android:string/cancel"
+            android:scaleType="center"
+            android:src="?attr/efp__ic_action_cancel" />
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignWithParentIfMissing="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_toLeftOf="@+id/menu_sort1"
+            android:layout_toRightOf="@+id/menu_cancel1"
             android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -83,7 +95,7 @@
         android:visibility="gone" >
 
         <ImageButton
-            android:id="@+id/menu_cancel"
+            android:id="@+id/menu_cancel2"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentLeft="true"
@@ -160,7 +172,7 @@
             android:layout_width="1dip"
             android:layout_height="24dp"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/menu_cancel"
+            android:layout_toRightOf="@+id/menu_cancel2"
             android:background="@color/efp__header_divider_color" />
     </RelativeLayout>
 

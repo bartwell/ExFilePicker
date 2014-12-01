@@ -37,6 +37,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/disable_sort_button" />
+    
+    <CheckBox
+        android:id="@+id/enable_quit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/enable_quit_button" />
 
     <TextView
         android:id="@+id/textView2"

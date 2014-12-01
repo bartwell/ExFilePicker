@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -52,29 +53,30 @@ import android.widget.Toast;
 
 public class ExFilePickerActivity extends Activity implements OnLongClickListener {
 
-	final private String[] videoExtensions = { "avi", "mp4", "3gp", "mov" };
-	final private String[] imagesExtensions = { "jpeg", "jpg", "png", "gif", "bmp", "wbmp" };
+	final private String[] mVideoExtensions = { "avi", "mp4", "3gp", "mov" };
+	final private String[] mImagesExtensions = { "jpeg", "jpg", "png", "gif", "bmp", "wbmp" };
 
 	final private boolean DEBUG = false;
 	final private String TAG = "ExFilePicker";
 
-	private boolean s_onlyOneItem = false;
-	private List<String> s_filterExclude;
-	private List<String> s_filterListed;
-	private int s_choiceType;
-	private int s_sortType;
+	private boolean mOptOnlyOneItem = false;
+	private List<String> mOptFilterExclude;
+	private List<String> mOptFilterListed;
+	private int mOptChoiceType;
+	private int mOptSortType;
 
-	private LruCache<String, Bitmap> bitmapsCache;
+	private LruCache<String, Bitmap> mBitmapsCache;
 
-	private AbsListView absListView;
-	private View emptyView;
-	private ArrayList<File> filesList = new ArrayList<File>();
-	private ArrayList<String> selected = new ArrayList<String>();
-	private File currentDirectory;
-	private boolean isMultiChoice = false;
-	private ImageButton change_view;
-	private TextView header_title;
-
+	private AbsListView mAbsListView;
+	private View mEmptyView;
+	private ArrayList<File> mFilesList = new ArrayList<File>();
+	private ArrayList<String> mSelected = new ArrayList<String>();
+	private HashMap<String, Integer> mListPositioins = new HashMap<String, Integer>();
+	private File mCurrentDirectory;
+	private boolean mIsMultiChoice = false;
+	private ImageButton mChangeView;
+	private TextView mHeaderTitle;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -85,7 +87,7 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 
 		final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
 		final int cacheSize = maxMemory / 8;
-		bitmapsCache = new LruCache<String, Bitmap>(cacheSize) {
+		mBitmapsCache = new LruCache<String, Bitmap>(cacheSize) {
 			@Override
 			protected int sizeOf(String key, Bitmap bitmap) {
 				return getBitmapSize(bitmap) / 1024;
@@ -93,19 +95,19 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 		};
 
 		Intent intent = getIntent();
-		s_onlyOneItem = intent.getBooleanExtra(ExFilePicker.SET_ONLY_ONE_ITEM, false);
+		mOptOnlyOneItem = intent.getBooleanExtra(ExFilePicker.SET_ONLY_ONE_ITEM, false);
 		if (intent.hasExtra(ExFilePicker.SET_FILTER_EXCLUDE)) {
-			s_filterExclude = Arrays.asList(intent.getStringArrayExtra(ExFilePicker.SET_FILTER_EXCLUDE));
+			mOptFilterExclude = Arrays.asList(intent.getStringArrayExtra(ExFilePicker.SET_FILTER_EXCLUDE));
 		}
 		if (intent.hasExtra(ExFilePicker.SET_FILTER_LISTED)) {
-			s_filterListed = Arrays.asList(intent.getStringArrayExtra(ExFilePicker.SET_FILTER_LISTED));
+			mOptFilterListed = Arrays.asList(intent.getStringArrayExtra(ExFilePicker.SET_FILTER_LISTED));
 		}
-		s_choiceType = intent.getIntExtra(ExFilePicker.SET_CHOICE_TYPE, ExFilePicker.CHOICE_TYPE_ALL);
-		
-		s_sortType = intent.getIntExtra(ExFilePicker.SET_SORT_TYPE, ExFilePicker.SORT_NAME_ASC);
+		mOptChoiceType = intent.getIntExtra(ExFilePicker.SET_CHOICE_TYPE, ExFilePicker.CHOICE_TYPE_ALL);
 
-		emptyView = getLayoutInflater().inflate(R.layout.efp__empty, null);
-		addContentView(emptyView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		mOptSortType = intent.getIntExtra(ExFilePicker.SET_SORT_TYPE, ExFilePicker.SORT_NAME_ASC);
+
+		mEmptyView = getLayoutInflater().inflate(R.layout.efp__empty, null);
+		addContentView(mEmptyView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
 		setAbsListView();
 		showSecondHeader(false);
@@ -124,7 +126,7 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 		}
 		readDirectory(path);
 
-		header_title = (TextView) findViewById(R.id.title);
+		mHeaderTitle = (TextView) findViewById(R.id.title);
 		updateTitle();
 
 		ImageButton new_folder = (ImageButton) findViewById(R.id.menu_new_folder);
@@ -141,12 +143,12 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							if (name.length() > 0) {
-								File file = new File(currentDirectory, name.getText().toString());
+								File file = new File(mCurrentDirectory, name.getText().toString());
 								if (file.exists()) Toast.makeText(ExFilePickerActivity.this, R.string.efp__folder_already_exists, Toast.LENGTH_SHORT).show();
 								else {
 									file.mkdir();
 									if (file.isDirectory()) {
-										readDirectory(currentDirectory);
+										readDirectory(mCurrentDirectory);
 										Toast.makeText(ExFilePickerActivity.this, R.string.efp__folder_created, Toast.LENGTH_SHORT).show();
 									} else Toast.makeText(ExFilePickerActivity.this, R.string.efp__folder_not_created, Toast.LENGTH_SHORT).show();
 								}
@@ -173,22 +175,22 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 						public void onClick(DialogInterface dialog, int which) {
 							switch (which) {
 							case 0:
-								s_sortType = ExFilePicker.SORT_NAME_ASC;
+								mOptSortType = ExFilePicker.SORT_NAME_ASC;
 								break;
 							case 1:
-								s_sortType = ExFilePicker.SORT_NAME_DESC;
+								mOptSortType = ExFilePicker.SORT_NAME_DESC;
 								break;
 							case 2:
-								s_sortType = ExFilePicker.SORT_SIZE_ASC;
+								mOptSortType = ExFilePicker.SORT_SIZE_ASC;
 								break;
 							case 3:
-								s_sortType = ExFilePicker.SORT_SIZE_DESC;
+								mOptSortType = ExFilePicker.SORT_SIZE_DESC;
 								break;
 							case 4:
-								s_sortType = ExFilePicker.SORT_DATE_ASC;
+								mOptSortType = ExFilePicker.SORT_DATE_ASC;
 								break;
 							case 5:
-								s_sortType = ExFilePicker.SORT_DATE_DESC;
+								mOptSortType = ExFilePicker.SORT_DATE_DESC;
 								break;
 
 							}
@@ -207,30 +209,41 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 			sort2.setVisibility(ImageButton.GONE);
 		}
 
-		change_view = (ImageButton) findViewById(R.id.menu_change_view);
+		mChangeView = (ImageButton) findViewById(R.id.menu_change_view);
 		setMenuItemView();
-		change_view.setOnClickListener(new OnClickListener() {
+		mChangeView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				setAbsListView();
 				setMenuItemView();
 			}
 		});
-		change_view.setOnLongClickListener(this);
+		mChangeView.setOnLongClickListener(this);
 
-		ImageButton cancel = (ImageButton) findViewById(R.id.menu_cancel);
-		cancel.setOnClickListener(new OnClickListener() {
+		ImageButton cancel1 = (ImageButton) findViewById(R.id.menu_cancel1);
+		if (intent.getBooleanExtra(ExFilePicker.ENABLE_QUIT_BUTTON, false)) {
+			cancel1.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					complete(null);
+				}
+			});
+			cancel1.setOnLongClickListener(this);
+		} else cancel1.setVisibility(ImageButton.GONE);
+
+		ImageButton cancel2 = (ImageButton) findViewById(R.id.menu_cancel2);
+		cancel2.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				disableMultiChoice();
 				showSecondHeader(false);
 			}
 		});
-		cancel.setOnLongClickListener(this);
+		cancel2.setOnLongClickListener(this);
 
 		ImageButton ok1 = (ImageButton) findViewById(R.id.menu_ok1);
 		View ok1_delimiter = findViewById(R.id.ok1_delimiter);
-		if (s_onlyOneItem && s_choiceType == ExFilePicker.CHOICE_TYPE_DIRECTORIES) {
+		if (mOptOnlyOneItem && mOptChoiceType == ExFilePicker.CHOICE_TYPE_DIRECTORIES) {
 			ok1.setVisibility(ImageButton.VISIBLE);
 			ok1_delimiter.setVisibility(ImageButton.VISIBLE);
 			ok1.setOnClickListener(new OnClickListener() {
@@ -238,14 +251,14 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 				public void onClick(View v) {
 					ArrayList<String> list = new ArrayList<String>();
 					String parent;
-					File parentFile = currentDirectory.getParentFile();
+					File parentFile = mCurrentDirectory.getParentFile();
 					if (parentFile == null) {
 						parent = "";
 						list.add("/");
 					} else {
 						parent = parentFile.getAbsolutePath();
 						if (!parent.endsWith("/")) parent += "/";
-						list.add(currentDirectory.getName());
+						list.add(mCurrentDirectory.getName());
 					}
 					ExFilePickerParcelObject object = new ExFilePickerParcelObject(parent, list, 1);
 					complete(object);
@@ -260,7 +273,7 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 		ImageButton select_all = (ImageButton) findViewById(R.id.menu_select_all);
 		ImageButton deselect = (ImageButton) findViewById(R.id.menu_deselect);
 		ImageButton invert = (ImageButton) findViewById(R.id.menu_invert);
-		if (s_onlyOneItem) {
+		if (mOptOnlyOneItem) {
 			select_all.setVisibility(ImageButton.GONE);
 			deselect.setVisibility(ImageButton.GONE);
 			invert.setVisibility(ImageButton.GONE);
@@ -268,10 +281,10 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 			select_all.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					selected.clear();
-					for (int i = 0; i < filesList.size(); i++)
-						selected.add(filesList.get(i).getName());
-					((BaseAdapter) absListView.getAdapter()).notifyDataSetChanged();
+					mSelected.clear();
+					for (int i = 0; i < mFilesList.size(); i++)
+						mSelected.add(mFilesList.get(i).getName());
+					((BaseAdapter) mAbsListView.getAdapter()).notifyDataSetChanged();
 				}
 			});
 			select_all.setOnLongClickListener(this);
@@ -279,8 +292,8 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 			deselect.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					selected.clear();
-					((BaseAdapter) absListView.getAdapter()).notifyDataSetChanged();
+					mSelected.clear();
+					((BaseAdapter) mAbsListView.getAdapter()).notifyDataSetChanged();
 				}
 			});
 			deselect.setOnLongClickListener(this);
@@ -289,12 +302,12 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 				@Override
 				public void onClick(View v) {
 					ArrayList<String> tmp = new ArrayList<String>();
-					for (int i = 0; i < filesList.size(); i++) {
-						String filename = filesList.get(i).getName();
-						if (!selected.contains(filename)) tmp.add(filename);
+					for (int i = 0; i < mFilesList.size(); i++) {
+						String filename = mFilesList.get(i).getName();
+						if (!mSelected.contains(filename)) tmp.add(filename);
 					}
-					selected = tmp;
-					((BaseAdapter) absListView.getAdapter()).notifyDataSetChanged();
+					mSelected = tmp;
+					((BaseAdapter) mAbsListView.getAdapter()).notifyDataSetChanged();
 				}
 			});
 			invert.setOnLongClickListener(this);
@@ -304,7 +317,7 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 		ok2.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (selected.size() > 0) {
+				if (mSelected.size() > 0) {
 					complete(null);
 				} else {
 					disableMultiChoice();
@@ -326,19 +339,26 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 	public boolean dispatchKeyEvent(KeyEvent event) {
 		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
 			if (event.getAction() == KeyEvent.ACTION_UP) {
-				if (isMultiChoice) {
+				if (mIsMultiChoice) {
 					disableMultiChoice();
 				} else {
-					File parentFile = currentDirectory.getParentFile();
+					File parentFile = mCurrentDirectory.getParentFile();
 					if (parentFile == null) {
 						complete(null);
 					} else {
 						readDirectory(parentFile);
+
+						String path = mCurrentDirectory.getAbsolutePath();
+						if (mListPositioins.containsKey(path)) {
+							mAbsListView.setSelection(mListPositioins.get(path));
+							mListPositioins.remove(path);
+						}
+
 						updateTitle();
 					}
 				}
 			} else if (event.getAction() == KeyEvent.ACTION_DOWN && (event.getFlags() & KeyEvent.FLAG_LONG_PRESS) == KeyEvent.FLAG_LONG_PRESS) {
-				selected.clear();
+				mSelected.clear();
 				complete(null);
 			}
 			return true;
@@ -348,12 +368,12 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 
 	private void disableMultiChoice() {
 		showSecondHeader(false);
-		isMultiChoice = false;
-		selected.clear();
-		if (s_choiceType == ExFilePicker.CHOICE_TYPE_FILES && !s_onlyOneItem) {
-			readDirectory(currentDirectory);
+		mIsMultiChoice = false;
+		mSelected.clear();
+		if (mOptChoiceType == ExFilePicker.CHOICE_TYPE_FILES && !mOptOnlyOneItem) {
+			readDirectory(mCurrentDirectory);
 		}
-		((BaseAdapter) absListView.getAdapter()).notifyDataSetChanged();
+		((BaseAdapter) mAbsListView.getAdapter()).notifyDataSetChanged();
 	}
 
 	private void showSecondHeader(boolean show) {
@@ -367,14 +387,14 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 	}
 
 	private void updateTitle() {
-		header_title.setText(currentDirectory.getName());
+		mHeaderTitle.setText(mCurrentDirectory.getName());
 	}
 
 	private void complete(ExFilePickerParcelObject object) {
 		if (object == null) {
-			String path = currentDirectory.getAbsolutePath();
+			String path = mCurrentDirectory.getAbsolutePath();
 			if (!path.endsWith("/")) path += "/";
-			object = new ExFilePickerParcelObject(path, selected, selected.size());
+			object = new ExFilePickerParcelObject(path, mSelected, mSelected.size());
 		}
 		Intent intent = new Intent();
 		intent.putExtra(ExFilePickerParcelObject.class.getCanonicalName(), object);
@@ -383,18 +403,18 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 	}
 
 	private void readDirectory(File path) {
-		currentDirectory = path;
-		filesList.clear();
+		mCurrentDirectory = path;
+		mFilesList.clear();
 		File[] files = path.listFiles();
 		if (files != null) {
 			for (int i = 0; i < files.length; i++) {
-				if (s_choiceType == ExFilePicker.CHOICE_TYPE_DIRECTORIES && !files[i].isDirectory()) continue;
+				if (mOptChoiceType == ExFilePicker.CHOICE_TYPE_DIRECTORIES && !files[i].isDirectory()) continue;
 				if (files[i].isFile()) {
 					String extension = getFileExtension(files[i].getName());
-					if (s_filterListed != null && !s_filterListed.contains(extension)) continue;
-					if (s_filterExclude != null && s_filterExclude.contains(extension)) continue;
+					if (mOptFilterListed != null && !mOptFilterListed.contains(extension)) continue;
+					if (mOptFilterExclude != null && mOptFilterExclude.contains(extension)) continue;
 				}
-				filesList.add(files[i]);
+				mFilesList.add(files[i]);
 			}
 		}
 
@@ -402,14 +422,14 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 	}
 
 	private void sort() {
-		Collections.sort(filesList, new Comparator<File>() {
+		Collections.sort(mFilesList, new Comparator<File>() {
 			@Override
 			public int compare(File file1, File file2) {
 				boolean isDirectory1 = file1.isDirectory();
 				boolean isDirectory2 = file2.isDirectory();
 				if (isDirectory1 && !isDirectory2) return -1;
 				if (!isDirectory1 && isDirectory2) return 1;
-				switch (s_sortType) {
+				switch (mOptSortType) {
 				case ExFilePicker.SORT_NAME_DESC:
 					return file2.getName().toLowerCase(Locale.getDefault()).compareTo(file1.getName().toLowerCase(Locale.getDefault()));
 				case ExFilePicker.SORT_SIZE_ASC:
@@ -425,60 +445,62 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 				return file1.getName().toLowerCase(Locale.getDefault()).compareTo(file2.getName().toLowerCase(Locale.getDefault()));
 			}
 		});
-		((BaseAdapter) absListView.getAdapter()).notifyDataSetChanged();
+		((BaseAdapter) mAbsListView.getAdapter()).notifyDataSetChanged();
 	}
 
 	private void setMenuItemView() {
-		if (absListView.getId() == R.id.gridview) {
-			change_view.setImageResource(attrToResId(R.attr.efp__ic_action_list));
-			change_view.setContentDescription(getString(R.string.efp__action_list));
+		if (mAbsListView.getId() == R.id.gridview) {
+			mChangeView.setImageResource(attrToResId(R.attr.efp__ic_action_list));
+			mChangeView.setContentDescription(getString(R.string.efp__action_list));
 		} else {
-			change_view.setImageResource(attrToResId(R.attr.efp__ic_action_grid));
-			change_view.setContentDescription(getString(R.string.efp__action_grid));
+			mChangeView.setImageResource(attrToResId(R.attr.efp__ic_action_grid));
+			mChangeView.setContentDescription(getString(R.string.efp__action_grid));
 		}
 	}
 
 	private void setAbsListView() {
 		int curView, nextView;
-		if (absListView == null || absListView.getId() == R.id.gridview) {
+		if (mAbsListView == null || mAbsListView.getId() == R.id.gridview) {
 			curView = R.id.gridview;
 			nextView = R.id.listview;
 		} else {
 			curView = R.id.listview;
 			nextView = R.id.gridview;
 		}
-		absListView = (AbsListView) findViewById(nextView);
-		absListView.setEmptyView(emptyView);
+		mAbsListView = (AbsListView) findViewById(nextView);
+		mAbsListView.setEmptyView(mEmptyView);
 		FilesListAdapter adapter = new FilesListAdapter(this, (nextView == R.id.listview) ? R.layout.efp__list_item : R.layout.efp__grid_item);
-		if (nextView == R.id.listview) ((ListView) absListView).setAdapter(adapter);
-		else ((GridView) absListView).setAdapter(adapter);
-		absListView.setOnItemClickListener(new OnItemClickListener() {
+		if (nextView == R.id.listview) ((ListView) mAbsListView).setAdapter(adapter);
+		else ((GridView) mAbsListView).setAdapter(adapter);
+		mAbsListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				if (position < filesList.size()) {
-					File file = filesList.get(position);
-					if (isMultiChoice) {
+				if (position < mFilesList.size()) {
+					File file = mFilesList.get(position);
+					if (mIsMultiChoice) {
 						CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkbox);
 						if (checkBox.isChecked()) {
 							checkBox.setChecked(false);
 							setItemBackground(view, false);
-							selected.remove(file.getName());
+							mSelected.remove(file.getName());
 						} else {
-							if (s_onlyOneItem) {
-								selected.clear();
-								((BaseAdapter) absListView.getAdapter()).notifyDataSetChanged();
+							if (mOptOnlyOneItem) {
+								mSelected.clear();
+								((BaseAdapter) mAbsListView.getAdapter()).notifyDataSetChanged();
 							}
 							checkBox.setChecked(true);
 							setItemBackground(view, true);
-							selected.add(file.getName());
+							mSelected.add(file.getName());
 						}
 					} else {
 						if (file.isDirectory()) {
+							int currentPosition = mAbsListView.getFirstVisiblePosition();
+							mListPositioins.put(mCurrentDirectory.getAbsolutePath(), currentPosition);
 							readDirectory(file);
 							updateTitle();
-							absListView.setSelection(0);
+							mAbsListView.setSelection(0);
 						} else {
-							selected.add(file.getName());
+							mSelected.add(file.getName());
 							complete(null);
 						}
 					}
@@ -486,27 +508,27 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 			}
 		});
 
-		if (s_choiceType != ExFilePicker.CHOICE_TYPE_FILES || !s_onlyOneItem) {
-			absListView.setOnItemLongClickListener(new OnItemLongClickListener() {
+		if (mOptChoiceType != ExFilePicker.CHOICE_TYPE_FILES || !mOptOnlyOneItem) {
+			mAbsListView.setOnItemLongClickListener(new OnItemLongClickListener() {
 				@Override
 				public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-					if (!isMultiChoice) {
-						isMultiChoice = true;
-						if (position < filesList.size()) {
-							File file = filesList.get(position);
-							if (s_choiceType != ExFilePicker.CHOICE_TYPE_FILES || file.isFile()) selected.add(file.getName());
+					if (!mIsMultiChoice) {
+						mIsMultiChoice = true;
+						if (position < mFilesList.size()) {
+							File file = mFilesList.get(position);
+							if (mOptChoiceType != ExFilePicker.CHOICE_TYPE_FILES || file.isFile()) mSelected.add(file.getName());
 						}
 
-						if (s_choiceType == ExFilePicker.CHOICE_TYPE_FILES && !s_onlyOneItem) {
+						if (mOptChoiceType == ExFilePicker.CHOICE_TYPE_FILES && !mOptOnlyOneItem) {
 							ArrayList<File> tmpList = new ArrayList<File>();
-							for (int i = 0; i < filesList.size(); i++) {
-								File file = filesList.get(i);
+							for (int i = 0; i < mFilesList.size(); i++) {
+								File file = mFilesList.get(i);
 								if (file.isFile()) tmpList.add(file);
 							}
-							filesList = tmpList;
+							mFilesList = tmpList;
 						}
 
-						((BaseAdapter) absListView.getAdapter()).notifyDataSetChanged();
+						((BaseAdapter) mAbsListView.getAdapter()).notifyDataSetChanged();
 
 						showSecondHeader(true);
 						return true;
@@ -516,7 +538,7 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 			});
 		}
 		findViewById(curView).setVisibility(View.GONE);
-		absListView.setVisibility(View.VISIBLE);
+		mAbsListView.setVisibility(View.VISIBLE);
 	}
 
 	private void setItemBackground(View view, boolean state) {
@@ -544,12 +566,12 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 
 	private void addBitmapToCache(String key, Bitmap bitmap) {
 		if (getBitmapFromCache(key) == null) {
-			bitmapsCache.put(key, bitmap);
+			mBitmapsCache.put(key, bitmap);
 		}
 	}
 
 	private Bitmap getBitmapFromCache(String key) {
-		return bitmapsCache.get(key);
+		return mBitmapsCache.get(key);
 	}
 
 	class FilesListAdapter extends BaseAdapter {
@@ -563,12 +585,12 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 
 		@Override
 		public int getCount() {
-			return filesList.size();
+			return mFilesList.size();
 		}
 
 		@Override
 		public Object getItem(int position) {
-			return filesList.get(position);
+			return mFilesList.get(position);
 		}
 
 		@Override
@@ -578,25 +600,25 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
-			File file = filesList.get(position);
+			File file = mFilesList.get(position);
 
 			convertView = LayoutInflater.from(mContext).inflate(mResource, parent, false);
 			ImageView thumbnail = (ImageView) convertView.findViewById(R.id.thumbnail);
 
 			CheckBox checkbox = (CheckBox) convertView.findViewById(R.id.checkbox);
-			if (selected.contains(file.getName())) {
+			if (mSelected.contains(file.getName())) {
 				checkbox.setChecked(true);
 				setItemBackground(convertView, true);
 			} else {
 				checkbox.setChecked(false);
 				setItemBackground(convertView, false);
 			}
-			if (isMultiChoice) checkbox.setVisibility(View.VISIBLE);
+			if (mIsMultiChoice) checkbox.setVisibility(View.VISIBLE);
 
 			if (file.isDirectory()) {
 				thumbnail.setImageResource(R.drawable.efp__ic_folder);
 			} else {
-				if (Build.VERSION.SDK_INT >= 5 && (Arrays.asList(videoExtensions).contains(getFileExtension(file.getName())) || Arrays.asList(imagesExtensions).contains(getFileExtension(file.getName())))) {
+				if (Build.VERSION.SDK_INT >= 5 && (Arrays.asList(mVideoExtensions).contains(getFileExtension(file.getName())) || Arrays.asList(mImagesExtensions).contains(getFileExtension(file.getName())))) {
 					Bitmap bitmap = getBitmapFromCache(file.getAbsolutePath());
 					if (bitmap == null) new ThumbnailLoader(thumbnail).execute(file);
 					else thumbnail.setImageBitmap(bitmap);
@@ -642,7 +664,7 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 					if (DEBUG) Log.d(TAG, file.getAbsolutePath());
 					try {
 						ContentResolver crThumb = getContentResolver();
-						if (Arrays.asList(videoExtensions).contains(getFileExtension(file.getName()))) {
+						if (Arrays.asList(mVideoExtensions).contains(getFileExtension(file.getName()))) {
 							if (DEBUG) Log.d(TAG, "Video");
 							Cursor cursor = crThumb.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, new String[] { MediaStore.Video.Media._ID }, MediaStore.Video.Media.DATA + "='" + file.getAbsolutePath() + "'", null, null);
 							if (cursor != null) {
@@ -654,7 +676,7 @@ public class ExFilePickerActivity extends Activity implements OnLongClickListene
 								}
 								cursor.close();
 							}
-						} else if (Arrays.asList(imagesExtensions).contains(getFileExtension(file.getName()))) {
+						} else if (Arrays.asList(mImagesExtensions).contains(getFileExtension(file.getName()))) {
 							if (DEBUG) Log.d(TAG, "Image");
 							Cursor cursor = crThumb.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new String[] { MediaStore.Images.Media._ID }, MediaStore.Images.Media.DATA + "='" + file.getAbsolutePath() + "'", null, null);
 							if (cursor != null) {

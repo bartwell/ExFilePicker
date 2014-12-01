@@ -84,6 +84,8 @@ ExFilePicker can be configurated via intent extras.
 
 * DISABLE_SORT_BUTTON - boolean; if true, button "Sort" will not showing.
 
+* ENABLE_QUIT_BUTTON - boolean; if true, quit button will showing.
+
 * SET_SORT_TYPE - int; one of SORT_NAME_ASC, SORT_NAME_DESC, SORT_SIZE_ASC, SORT_SIZE_DESC, SORT_DATE_ASC or SORT_DATE_DESC. Set default sorting. SORT_NAME_ASC by default.
 
 Look example in ExFilePickerSample.

@@ -12,5 +12,6 @@
     <string name="choice_type">Choice type:</string>
     <string name="disable_new_folder_button">Disable \"New folder\" button</string>
     <string name="disable_sort_button">Disable \"Sort\" button</string>
+    <string name="enable_quit_button">Enable quit button</string>
 
 </resources>

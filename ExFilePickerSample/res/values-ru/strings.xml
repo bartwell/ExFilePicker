@@ -12,5 +12,6 @@
     <string name="choice_type">Тип выбора:</string>
     <string name="disable_new_folder_button">Скрыть кнопку \"Новая папка\"</string>
     <string name="disable_sort_button">Скрыть кнопку \"Сортировать\"</string>
+    <string name="enable_quit_button">Показать кнопку выхода</string>
 
 </resources>

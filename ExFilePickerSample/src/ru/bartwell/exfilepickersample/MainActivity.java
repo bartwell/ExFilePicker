@@ -29,6 +29,7 @@ public class MainActivity extends Activity {
 				if (((CheckBox) findViewById(R.id.filter_exclude)).isChecked()) intent.putExtra(ExFilePicker.SET_FILTER_EXCLUDE, new String[] { "jpg" });
 				if (((CheckBox) findViewById(R.id.disable_new_folder_button)).isChecked()) intent.putExtra(ExFilePicker.DISABLE_NEW_FOLDER_BUTTON, true);
 				if (((CheckBox) findViewById(R.id.disable_sort_button)).isChecked()) intent.putExtra(ExFilePicker.DISABLE_SORT_BUTTON, true);
+				if (((CheckBox) findViewById(R.id.enable_quit_button)).isChecked()) intent.putExtra(ExFilePicker.ENABLE_QUIT_BUTTON, true);
 
 				int checkedChoiceRadio = ((RadioGroup) findViewById(R.id.choice_type)).getCheckedRadioButtonId();
 				if (checkedChoiceRadio == R.id.choice_type_files) intent.putExtra(ExFilePicker.SET_CHOICE_TYPE, ExFilePicker.CHOICE_TYPE_FILES);
