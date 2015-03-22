@@ -1,5 +1,8 @@
-/ExFilePicker/assets
-/ExFilePicker/bin
-/ExFilePicker/gen
-/ExFilePickerSample/gen
-/ExFilePickerSample/bin
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/library/build
+/sample/build

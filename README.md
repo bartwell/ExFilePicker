@@ -17,6 +17,10 @@ It can:
 * Sorting
 * Creating directories
 
+## Download
+
+AAR: [ExFilePicker.aar](https://raw.github.com/bartwell/ExFilePicker/master/stuff/ExFilePicker-1.8.aar)
+
 ## Usage
 
 __1.__ Add ExFilePicker library as a dependency to your project

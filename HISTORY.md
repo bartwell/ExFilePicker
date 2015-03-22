@@ -1,3 +1,6 @@
+### v1.8
+	* Migrate to Android Studio
+
 ### v1.7
 	* Added optional quit button with ENABLE_QUIT_BUTTON option
 	* When user getting back to previous directory, list automatically scrolled to previous position
