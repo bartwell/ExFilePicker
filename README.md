@@ -33,7 +33,7 @@ dependencies {
 
 * AAR:
 
-([Download AAR](https://github.com/bartwell/ExFilePicker/tree/master/library/build/outputs/aar/library-release.aar))
+[Download AAR](https://github.com/bartwell/ExFilePicker/tree/master/library/build/outputs/aar/library-release.aar)
 
 ## Usage
 
@@ -114,7 +114,7 @@ ExFilePicker library provide two themes for ExFilePicker's activity: dark and li
 
 ## Sample Application
 
-Sample application is no more available on Google Play: account 'bartwell' was banned and all appeals was declined or ignored. To see how it works you can download debug version ([here](https://github.com/bartwell/ExFilePicker/tree/master/sample/build/outputs/apk/sample-debug.apk)).
+Sample application is no more available on Google Play: account 'bartwell' was banned and all appeals was declined or ignored. To see how it works you can download debug version [here](https://github.com/bartwell/ExFilePicker/tree/master/sample/build/outputs/apk/sample-debug.apk).
 
 ## License
 
