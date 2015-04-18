@@ -19,7 +19,21 @@ It can:
 
 ## Download
 
-AAR: [ExFilePicker.aar](https://raw.github.com/bartwell/ExFilePicker/master/stuff/ExFilePicker-1.8.aar)
+* Gradle:
+
+```groovy
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'ru.bartwell:exfilepicker:1.8'
+}
+```
+
+* AAR:
+
+([Download AAR](https://github.com/bartwell/ExFilePicker/tree/master/library/build/outputs/aar/library-release.aar))
 
 ## Usage
 
@@ -100,7 +114,7 @@ ExFilePicker library provide two themes for ExFilePicker's activity: dark and li
 
 ## Sample Application
 
-[![Get it on Google Play](http://www.android.com/images/brand/get_it_on_play_logo_small.png)](http://play.google.com/store/apps/details?id=ru.bartwell.exfilepickersample)
+Sample application is no more available on Google Play: account 'bartwell' was banned and all appeals was declined or ignored. To see how it works you can download debug version ([here](https://github.com/bartwell/ExFilePicker/tree/master/sample/build/outputs/apk/sample-debug.apk)).
 
 ## License
 
