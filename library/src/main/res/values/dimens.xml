@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="files_list_item_height">64dp</dimen>
+    <dimen name="files_list_item_thumbnail_size">60dp</dimen>
+    <dimen name="files_list_item_thumbnail_margin_right">8dp</dimen>
+    <dimen name="files_grid_item_thumbnail_size">60dp</dimen>
+    <dimen name="files_grid_item_thumbnail_margin">4dp</dimen>
+    <dimen name="files_grid_filename_text_size">12sp</dimen>
+    <dimen name="files_grid_item_size">100dp</dimen>
+    <dimen name="files_grid_item_margin_top">8dp</dimen>
+    <dimen name="files_grid_item_text_margin_side">4dp</dimen>
+</resources>

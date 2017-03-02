@@ -1,3 +1,9 @@
+### v2.0
+	* Refactoring
+	* Add runtime permissions support
+	* Update icons and design
+	* Now using support library
+
 ### v1.8
 	* Migrate to Android Studio
 

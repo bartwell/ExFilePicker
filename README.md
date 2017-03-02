@@ -27,7 +27,7 @@ repositories {
 }
 
 dependencies {
-    compile 'ru.bartwell:exfilepicker:1.8'
+    compile 'ru.bartwell:exfilepicker:2.0'
 }
 ```
 
@@ -39,20 +39,15 @@ dependencies {
 
 __1.__ Add ExFilePicker library as a dependency to your project
 
-__2.__ Add next code into your project where is needed:
+__2.__ Use methods from `ExFilePicker` class to launch picker activity and receive result in `onActivityResult()`:
 
 ```java
-import ru.bartwell.exfilepicker.ExFilePicker;
-import ru.bartwell.exfilepicker.ExFilePickerParcelObject;
-
-// ...
-	
 	private static final int EX_FILE_PICKER_RESULT = 0;
 
 	// ...
 	
-		Intent intent = new Intent(getApplicationContext(), ru.bartwell.exfilepicker.ExFilePickerActivity.class);
-		startActivityForResult(intent, EX_FILE_PICKER_RESULT);
+		ExFilePicker exFilePicker = new ExFilePicker();
+        exFilePicker.start(this, EX_FILE_PICKER_RESULT);
 
 	// ...
 	
@@ -60,7 +55,7 @@ import ru.bartwell.exfilepicker.ExFilePickerParcelObject;
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == EX_FILE_PICKER_RESULT) {
 			if (data != null) {
-				ExFilePickerParcelObject object = (ExFilePickerParcelObject) data.getParcelableExtra(ExFilePickerParcelObject.class.getCanonicalName());
+				ExFilePickerResult object = (ExFilePickerResult) data.getParcelableExtra(ExFilePickerResult.class.getCanonicalName());
 				if (object.count > 0) {
 					// Here is object contains selected files names and path
 				}
@@ -68,45 +63,30 @@ import ru.bartwell.exfilepicker.ExFilePickerParcelObject;
 		}
 	}
 ```
-__3.__ Add activity in your Manifest:
-
-```xml
-	<activity
-		android:name="ru.bartwell.exfilepicker.ExFilePickerActivity"
-		android:configChanges="orientation|screenSize"
-		android:theme="@style/ExFilePickerThemeDark" />
-```
-__4.__ If you need a "New folder" button, add permission in your Manifest:
-
-```xml
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-```
 
 ## Configuration
 
-ExFilePicker can be configurated via intent extras.
+Class ExFilePicker have following methods for configuration:
 
-* SET_ONLY_ONE_ITEM - boolean; if true, user can select only one item. False by default.
+* setCanChooseOnlyOneItem() - if true, user can select only one item. False by default.
 
-* SET_FILTER_BY_EXTENSION - removed. Use SET_FILTER_EXCLUDE or SET_FILTER_LISTED instead.
+* setShowOnlyExtensions() - only files with this extensions will showed.
 
-* SET_FILTER_LISTED - String[]; only files with this extensions will showed.
+* setExceptExtensions() - files with this extensions will excluded.
 
-* SET_FILTER_EXCLUDE - String[]; files with this extensions will excluded.
+* setChoiceType() - one of value from ChoiceType. Set what user can select - only files, only directories or both. Both by default.
 
-* SET_CHOICE_TYPE - int; one of CHOICE_TYPE_ALL, CHOICE_TYPE_FILES or CHOICE_TYPE_DIRECTORIES. Set what user can select - only files, only directories or both. Both by default.
+* setStartDirectory() - This path will be open when ExFilePicker activity will called.
 
-* SET_START_DIRECTORY - String. This path will be open when ExFilePicker activity will called.
+* setNewFolderButtonDisabled() - if true, button "New folder" will not showing. You can also remove WRITE_EXTERNAL_STORAGE permission in this case.
 
-* DISABLE_NEW_FOLDER_BUTTON - boolean; if true, button "New folder" will not showing.
+* setSortButtonDisabled() - if true, button "Sort" will not showing.
 
-* DISABLE_SORT_BUTTON - boolean; if true, button "Sort" will not showing.
+* setQuitButtonEnabled() - if true, quit button will showing.
 
-* ENABLE_QUIT_BUTTON - boolean; if true, quit button will showing.
+* setSortingType() - one of value from SortingType. Set default sorting. NAME_ASC by default.
 
-* SET_SORT_TYPE - int; one of SORT_NAME_ASC, SORT_NAME_DESC, SORT_SIZE_ASC, SORT_SIZE_DESC, SORT_DATE_ASC or SORT_DATE_DESC. Set default sorting. SORT_NAME_ASC by default.
-
-Look example in ExFilePickerSample.
+Feel free to look sample.
 
 ## Customization
 

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/sort"
+        android:icon="?attr/efp__ic_action_sort"
+        android:title="@string/efp__sort"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction"/>
+
+    <item
+        android:id="@+id/select_all"
+        android:icon="?attr/efp__ic_action_select_all"
+        android:title="@string/efp__action_select_all"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/deselect"
+        android:icon="?attr/efp__ic_action_deselect"
+        android:title="@string/efp__action_deselect"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/invert_selection"
+        android:icon="?attr/efp__ic_action_invert_selection"
+        android:title="@string/efp__action_invert_selection"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/ok"
+        android:icon="?attr/efp__ic_action_ok"
+        android:title="@android:string/ok"
+        app:showAsAction="always"/>
+</menu>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/sort"
+        android:icon="?attr/efp__ic_action_sort"
+        android:title="@string/efp__sort"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction"/>
+
+    <item
+        android:id="@+id/new_folder"
+        android:icon="?attr/efp__ic_action_new_folder"
+        android:title="@string/efp__new_folder"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/change_view"
+        android:icon="?attr/efp__ic_action_grid"
+        android:title="@string/efp__action_grid"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/ok"
+        android:icon="?attr/efp__ic_action_ok"
+        android:title="@android:string/ok"
+        app:showAsAction="always"/>
+</menu>

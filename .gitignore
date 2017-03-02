@@ -8,3 +8,5 @@
 !/library/build/outputs/aar/library-release.aar
 /sample/build
 !/sample/build/outputs/apk/sample-debug.apk
+/.idea
+*.iml
