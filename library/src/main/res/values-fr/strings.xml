@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="efp__app_name">ExFilePicker</string>
+    <string name="efp__action_grid">Grille</string>
+    <string name="efp__action_list">Liste</string>
+
+    <string-array name="efp__size_units">
+        <item>o</item>
+        <item>Ko</item>
+        <item>Mo</item>
+        <item>Go</item>
+        <item>To</item>
+        <item>Po</item>
+    </string-array>
+
+    <string name="efp__empty_directory">Ce répertoire est vide</string>
+    <string name="efp__action_select_all">Tout sélectionner</string>
+    <string name="efp__action_deselect">Dé-sélectionner</string>
+    <string name="efp__action_invert_selection">Inverser la sélection</string>
+    <string name="efp__new_folder">Nouveau répertoire</string>
+    <string name="efp__folder_name_hint">Nom du répertoire</string>
+    <string name="efp__folder_created">Répertoire créé avec succès</string>
+    <string name="efp__folder_not_created">Erreur! Le répertoire n'a pas été créé</string>
+    <string name="efp__folder_already_exists">Le répertoire existe déjà</string>
+    <string name="efp__sort">Trier</string>
+
+    <string-array name="efp__sorting_types">
+        <item>Par nom, croissant</item>
+        <item>Par nom, décroissant</item>
+        <item>Par taille, croissant</item>
+        <item>Par taille, décroissant</item>
+        <item>Par date, croissant</item>
+        <item>Par date, décroissant</item>
+    </string-array>
+
+</resources>
