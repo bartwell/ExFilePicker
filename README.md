@@ -27,7 +27,7 @@ repositories {
 }
 
 dependencies {
-    compile 'ru.bartwell:exfilepicker:2.0'
+    compile 'ru.bartwell:exfilepicker:2.1'
 }
 ```
 
@@ -54,11 +54,9 @@ __2.__ Use methods from `ExFilePicker` class to launch picker activity and recei
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == EX_FILE_PICKER_RESULT) {
-			if (data != null) {
-				ExFilePickerResult object = (ExFilePickerResult) data.getParcelableExtra(ExFilePickerResult.class.getCanonicalName());
-				if (object.count > 0) {
-					// Here is object contains selected files names and path
-				}
+		    ExFilePickerResult result = ExFilePickerResult.getFromIntent(data);
+			if (result != null && object.getCount() > 0) {
+				// Here is object contains selected files names and path
 			}
 		}
 	}
