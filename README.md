@@ -92,7 +92,14 @@ Feel free to look sample.
 
 ## Customization
 
-ExFilePicker library provide two themes for ExFilePicker's activity: dark and light (ExFilePickerThemeDark and ExFilePickerThemeLight respectively). If you need to customize ExFilePicker's activity view, you can extend your own theme from any ExFilePicker's theme and override needed options.
+ExFilePicker library provide two themes for ExFilePicker's activity: dark and light (ExFilePickerThemeDark and ExFilePickerThemeLight respectively). If you need to customize ExFilePicker's activity view, you can extend your own theme from any ExFilePicker's theme and override needed options. To set theme you need specify activity in Manifest:
+
+```xml
+<activity
+    android:name="ru.bartwell.exfilepicker.ui.activity.ExFilePickerActivity"
+    android:theme="@style/ExFilePickerThemeDark"
+    tools:replace="android:theme"/>
+```
 
 ## Sample Application
 

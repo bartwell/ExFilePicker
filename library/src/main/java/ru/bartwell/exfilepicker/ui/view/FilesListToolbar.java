@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import ru.bartwell.exfilepicker.R;
+import ru.bartwell.exfilepicker.utils.Utils;
 
 /**
  * Created by BArtWell on 27.02.2017.
@@ -39,14 +40,14 @@ public class FilesListToolbar extends Toolbar {
             inflateMenu(R.menu.files_list_multi_choice);
             mTitle = getTitle();
             setTitle(null);
-            setNavigationIcon(R.drawable.efp_light__ic_action_cancel);
+            setNavigationIcon(Utils.attrToResId(getContext(), R.attr.efp__ic_action_cancel));
         } else {
             inflateMenu(R.menu.files_list_single_choice);
             if (!TextUtils.isEmpty(mTitle)) {
                 setTitle(mTitle);
             }
             if (mQuitButtonEnabled) {
-                setNavigationIcon(R.drawable.efp_light__ic_action_cancel);
+                setNavigationIcon(Utils.attrToResId(getContext(), R.attr.efp__ic_action_cancel));
             } else {
                 setNavigationIcon(null);
             }
