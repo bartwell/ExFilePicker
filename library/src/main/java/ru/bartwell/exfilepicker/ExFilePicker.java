@@ -13,6 +13,8 @@ import ru.bartwell.exfilepicker.ui.activity.ExFilePickerActivity;
 
 public class ExFilePicker {
 
+    public static final String EXTRA_RESULT = "RESULT";
+
     private boolean mCanChooseOnlyOneItem;
     @Nullable
     private String[] mShowOnlyExtensions;
@@ -27,6 +29,7 @@ public class ExFilePicker {
     private SortingType mSortingType = SortingType.NAME_ASC;
     @Nullable
     private String mStartDirectory;
+    private boolean mUseFirstItemAsUpEnabled;
 
     public void setCanChooseOnlyOneItem(boolean canChooseOnlyOneItem) {
         mCanChooseOnlyOneItem = canChooseOnlyOneItem;
@@ -64,6 +67,10 @@ public class ExFilePicker {
         mStartDirectory = startDirectory;
     }
 
+    public void setUseFirstItemAsUpEnabled(boolean enabled) {
+        mUseFirstItemAsUpEnabled = enabled;
+    }
+
     public void start(@NonNull Activity activity, int requestCode) {
         Intent intent = new Intent(activity, ExFilePickerActivity.class);
         intent.putExtra(ExFilePickerActivity.EXTRA_CAN_CHOOSE_ONLY_ONE_ITEM, mCanChooseOnlyOneItem);
@@ -75,6 +82,7 @@ public class ExFilePicker {
         intent.putExtra(ExFilePickerActivity.EXTRA_CHOICE_TYPE, mChoiceType);
         intent.putExtra(ExFilePickerActivity.EXTRA_SORTING_TYPE, mSortingType);
         intent.putExtra(ExFilePickerActivity.EXTRA_START_DIRECTORY, mStartDirectory);
+        intent.putExtra(ExFilePickerActivity.EXTRA_USE_FIRST_ITEM_AS_UP_ENABLED, mUseFirstItemAsUpEnabled);
         activity.startActivityForResult(intent, requestCode);
     }
 

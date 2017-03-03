@@ -32,23 +32,31 @@ public abstract class BaseFilesListHolder extends RecyclerView.ViewHolder implem
     }
 
     public void bind(@NonNull File file, boolean isMultiChoiceModeEnabled, boolean isSelected, @Nullable OnListItemClickListener listener) {
-        mListener = listener;
+        setOnListItemClickListener(listener);
         mFileName.setText(file.getName());
         mCheckBox.setVisibility(isMultiChoiceModeEnabled ? View.VISIBLE : View.GONE);
         mCheckBox.setChecked(isSelected);
     }
 
+    void setOnListItemClickListener(@Nullable OnListItemClickListener listener) {
+        mListener = listener;
+    }
+
+    int getItemPosition() {
+        return getAdapterPosition();
+    }
+
     @Override
     public void onClick(View view) {
         if (mListener != null) {
-            mListener.onListItemClick(getAdapterPosition());
+            mListener.onListItemClick(getItemPosition());
         }
     }
 
     @Override
     public boolean onLongClick(View view) {
         if (mListener != null) {
-            mListener.onListItemLongClick(getAdapterPosition());
+            mListener.onListItemLongClick(getItemPosition());
         }
         return true;
     }

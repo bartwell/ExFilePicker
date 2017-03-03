@@ -19,6 +19,7 @@ import ru.bartwell.exfilepicker.R;
 import ru.bartwell.exfilepicker.ui.adapter.holder.BaseFilesListHolder;
 import ru.bartwell.exfilepicker.ui.adapter.holder.DirectoryFilesListHolder;
 import ru.bartwell.exfilepicker.ui.adapter.holder.FileFilesListHolder;
+import ru.bartwell.exfilepicker.ui.adapter.holder.UpFilesListHolder;
 import ru.bartwell.exfilepicker.ui.callback.OnListItemClickListener;
 import ru.bartwell.exfilepicker.utils.comparator.FilesListComparatorHelper;
 
@@ -31,6 +32,8 @@ public class FilesListAdapter extends RecyclerView.Adapter<BaseFilesListHolder> 
     private static final int ITEM_TYPE_GRID_FILE = 1;
     private static final int ITEM_TYPE_LIST_DIRECTORY = 2;
     private static final int ITEM_TYPE_GRID_DIRECTORY = 3;
+    private static final int ITEM_TYPE_GRID_UP = 4;
+    private static final int ITEM_TYPE_LIST_UP = 5;
 
     @NonNull
     private List<File> mItems = new ArrayList<>();
@@ -43,6 +46,7 @@ public class FilesListAdapter extends RecyclerView.Adapter<BaseFilesListHolder> 
     private boolean mIsMultiChoiceModeEnabled;
     private boolean mIsGridModeEnabled;
     private boolean mCanChooseOnlyFiles;
+    private boolean mUseFirstItemAsUpEnabled;
 
     @Override
     public BaseFilesListHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -50,31 +54,47 @@ public class FilesListAdapter extends RecyclerView.Adapter<BaseFilesListHolder> 
             case ITEM_TYPE_LIST_FILE:
                 return new FileFilesListHolder(inflate(parent, R.layout.layout_files_list_item));
             case ITEM_TYPE_GRID_FILE:
-                return new FileFilesListHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_files_grid_item, parent, false));
+                return new FileFilesListHolder(inflate(parent, R.layout.layout_files_grid_item));
             case ITEM_TYPE_LIST_DIRECTORY:
-                return new DirectoryFilesListHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_files_list_item, parent, false));
+                return new DirectoryFilesListHolder(inflate(parent, R.layout.layout_files_list_item));
+            case ITEM_TYPE_LIST_UP:
+                return new UpFilesListHolder(inflate(parent, R.layout.layout_files_list_item));
+            case ITEM_TYPE_GRID_UP:
+                return new UpFilesListHolder(inflate(parent, R.layout.layout_files_list_item));
             default:
-                return new DirectoryFilesListHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_files_grid_item, parent, false));
+                return new DirectoryFilesListHolder(inflate(parent, R.layout.layout_files_grid_item));
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (mIsGridModeEnabled) {
-            return getItem(position).isDirectory() ? ITEM_TYPE_GRID_DIRECTORY : ITEM_TYPE_GRID_FILE;
+        if (mUseFirstItemAsUpEnabled && position == 0) {
+            return mIsGridModeEnabled ? ITEM_TYPE_GRID_UP : ITEM_TYPE_LIST_UP;
         } else {
-            return getItem(position).isDirectory() ? ITEM_TYPE_LIST_DIRECTORY : ITEM_TYPE_LIST_FILE;
+            if (mIsGridModeEnabled) {
+                return getItem(position).isDirectory() ? ITEM_TYPE_GRID_DIRECTORY : ITEM_TYPE_GRID_FILE;
+            } else {
+                return getItem(position).isDirectory() ? ITEM_TYPE_LIST_DIRECTORY : ITEM_TYPE_LIST_FILE;
+            }
         }
     }
 
     @Override
     public void onBindViewHolder(@NonNull BaseFilesListHolder holder, int position) {
-        holder.bind(getItem(position), mIsMultiChoiceModeEnabled, isItemSelected(position), mListener);
+        if (getItemViewType(position) == ITEM_TYPE_LIST_UP || getItemViewType(position) == ITEM_TYPE_GRID_UP) {
+            ((UpFilesListHolder) holder).bind(mListener);
+        } else {
+            holder.bind(getItem(position), mIsMultiChoiceModeEnabled, isItemSelected(position), mListener);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+        if (mUseFirstItemAsUpEnabled) {
+            return mItems.size() + 1;
+        } else {
+            return mItems.size();
+        }
     }
 
     public void setItems(@NonNull List<File> items, @NonNull ExFilePicker.SortingType sortingType) {
@@ -86,7 +106,11 @@ public class FilesListAdapter extends RecyclerView.Adapter<BaseFilesListHolder> 
 
     @NonNull
     public File getItem(int position) {
-        return mItems.get(position);
+        if (mUseFirstItemAsUpEnabled) {
+            return mItems.get(position - 1);
+        } else {
+            return mItems.get(position);
+        }
     }
 
     public void setOnListItemClickListener(@Nullable OnListItemClickListener listener) {
@@ -95,7 +119,9 @@ public class FilesListAdapter extends RecyclerView.Adapter<BaseFilesListHolder> 
 
     public void setMultiChoiceModeEnabled(boolean enabled) {
         mIsMultiChoiceModeEnabled = enabled;
-        mSelectedItems.clear();
+        if (!mIsMultiChoiceModeEnabled) {
+            mSelectedItems.clear();
+        }
         if (mCanChooseOnlyFiles) {
             if (enabled) {
                 mNotFilteredItems = new ArrayList<>(mItems);
@@ -120,7 +146,6 @@ public class FilesListAdapter extends RecyclerView.Adapter<BaseFilesListHolder> 
     public boolean isItemSelected(int position) {
         return mSelectedItems.contains(getItem(position).getName());
     }
-
 
     public void sort(@NonNull ExFilePicker.SortingType sortingType) {
         Collections.sort(mItems, FilesListComparatorHelper.getComparator(sortingType));
@@ -167,6 +192,10 @@ public class FilesListAdapter extends RecyclerView.Adapter<BaseFilesListHolder> 
 
     public void setCanChooseOnlyFiles(boolean canChooseOnlyFiles) {
         mCanChooseOnlyFiles = canChooseOnlyFiles;
+    }
+
+    public void setUseFirstItemAsUpEnabled(boolean enabled) {
+        mUseFirstItemAsUpEnabled = enabled;
     }
 
     @NonNull

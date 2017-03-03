@@ -48,6 +48,8 @@
             android:id="@+id/filename"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textAppearance="?android:attr/textAppearanceMedium"
             tools:text="File.txt"/>
 

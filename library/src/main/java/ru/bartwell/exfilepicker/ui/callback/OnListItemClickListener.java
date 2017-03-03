@@ -5,6 +5,7 @@ package ru.bartwell.exfilepicker.ui.callback;
  */
 
 public interface OnListItemClickListener {
-    void onListItemClick(int adapterPosition);
-    void onListItemLongClick(int adapterPosition);
+    public static final int POSITION_UP = -1;
+    void onListItemClick(int position);
+    void onListItemLongClick(int position);
 }

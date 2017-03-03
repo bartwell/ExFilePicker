@@ -61,7 +61,13 @@
             android:layout_height="wrap_content"
             android:text="@string/start_from_root"/>
 
-        <TextView
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/first_item_as_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/first_item_as_up"/>
+
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

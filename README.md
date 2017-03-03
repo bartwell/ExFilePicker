@@ -86,6 +86,8 @@ Class ExFilePicker have following methods for configuration:
 
 * setSortingType() - one of value from SortingType. Set default sorting. NAME_ASC by default.
 
+* setUseFirstItemAsUpEnabled() - enable link to the parent directory as first item in list. 
+
 Feel free to look sample.
 
 ## Customization

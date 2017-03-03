@@ -52,6 +52,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (((AppCompatCheckBox) findViewById(R.id.start_from_root)).isChecked()) {
             exFilePicker.setStartDirectory("/");
         }
+        if (((AppCompatCheckBox) findViewById(R.id.first_item_as_up)).isChecked()) {
+            exFilePicker.setUseFirstItemAsUpEnabled(true);
+        }
         int checkedChoiceRadio = ((RadioGroup) findViewById(R.id.choice_type)).getCheckedRadioButtonId();
         if (checkedChoiceRadio == R.id.choice_type_files) {
             exFilePicker.setChoiceType(ExFilePicker.ChoiceType.FILES);
@@ -62,18 +65,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == EX_FILE_PICKER_RESULT) {
-            if (data != null) {
-                ExFilePickerResult result = data.getParcelableExtra(ExFilePickerResult.class.getCanonicalName());
-                if (result.getCount() > 0) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    for (int i = 0; i < result.getCount(); i++) {
-                        stringBuilder.append(result.getNames().get(i));
-                        if (i < result.getCount() - 1) stringBuilder.append(", ");
-                    }
-                    ((TextView) findViewById(R.id.result)).setText("Count: " + result.getCount() + "\n" + "Path: " + result.getPath() + "\n" + "Selected: " + stringBuilder.toString());
+            ExFilePickerResult result = ExFilePickerResult.getFromIntent(data);
+            if (result != null && result.getCount() > 0) {
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int i = 0; i < result.getCount(); i++) {
+                    stringBuilder.append(result.getNames().get(i));
+                    if (i < result.getCount() - 1) stringBuilder.append(", ");
                 }
+                ((TextView) findViewById(R.id.result)).setText("Count: " + result.getCount() + "\n" + "Path: " + result.getPath() + "\n" + "Selected: " + stringBuilder.toString());
             }
         }
     }

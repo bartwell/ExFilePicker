@@ -21,7 +21,7 @@
     <string name="efp__new_folder">Nouveau répertoire</string>
     <string name="efp__folder_name_hint">Nom du répertoire</string>
     <string name="efp__folder_created">Répertoire créé avec succès</string>
-    <string name="efp__folder_not_created">Erreur! Le répertoire n'a pas été créé</string>
+    <string name="efp__folder_not_created">Erreur! Le répertoire n\'a pas été créé</string>
     <string name="efp__folder_already_exists">Le répertoire existe déjà</string>
     <string name="efp__sort">Trier</string>
 

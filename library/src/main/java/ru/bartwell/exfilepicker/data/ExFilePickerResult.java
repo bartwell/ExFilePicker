@@ -1,11 +1,15 @@
 package ru.bartwell.exfilepicker.data;
 
+import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import ru.bartwell.exfilepicker.ExFilePicker;
 
 /**
  * Created by BArtWell on 26.02.2017.
@@ -67,4 +71,12 @@ public class ExFilePickerResult implements Parcelable {
             return new ExFilePickerResult[size];
         }
     };
+
+    @Nullable
+    public static ExFilePickerResult getFromIntent(@Nullable Intent intent) {
+        if (intent != null) {
+            return intent.getParcelableExtra(ExFilePicker.EXTRA_RESULT);
+        }
+        return null;
+    }
 }

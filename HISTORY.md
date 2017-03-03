@@ -1,3 +1,7 @@
+### v2.1
+	* Use Glide to load thumbnails
+	* Add method setUseFirstItemAsUpEnabled()
+
 ### v2.0
 	* Refactoring
 	* Add runtime permissions support
