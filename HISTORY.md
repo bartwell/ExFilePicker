@@ -1,3 +1,7 @@
+### v2.2
+    * Minor fixes
+    * Add Slovak translation (thanks to pylerSM)
+
 ### v2.1
 	* Use Glide to load thumbnails
 	* Add method setUseFirstItemAsUpEnabled()

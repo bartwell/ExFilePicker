@@ -142,7 +142,7 @@ public class ExFilePickerActivity extends AppCompatActivity implements OnListIte
             if (mIsMultiChoiceModeEnabled) {
                 finishWithResult(mCurrentDirectory, mAdapter.getSelectedItems());
             } else if (mChoiceType == ExFilePicker.ChoiceType.DIRECTORIES) {
-                if (mCurrentDirectory.getAbsolutePath().equals(TOP_DIRECTORY)) {
+                if (isTopDirectory(mCurrentDirectory)) {
                     finishWithResult(mCurrentDirectory, "/");
                 } else {
                     finishWithResult(mCurrentDirectory.getParentFile(), mCurrentDirectory.getName());
@@ -188,7 +188,7 @@ public class ExFilePickerActivity extends AppCompatActivity implements OnListIte
                 if (mIsMultiChoiceModeEnabled) {
                     setMultiChoiceModeEnabled(false);
                 } else {
-                    if (mCurrentDirectory.getAbsolutePath().equals(TOP_DIRECTORY)) {
+                    if (isTopDirectory(mCurrentDirectory)) {
                         finish();
                     } else {
                         readUpDirectory();
@@ -231,7 +231,7 @@ public class ExFilePickerActivity extends AppCompatActivity implements OnListIte
 
     private void readDirectory(@NonNull File directory) {
         setTitle(directory);
-        mAdapter.setUseFirstItemAsUpEnabled(!directory.getAbsolutePath().equals(TOP_DIRECTORY) && mUseFirstItemAsUpEnabled);
+        mAdapter.setUseFirstItemAsUpEnabled(!isTopDirectory(directory) && mUseFirstItemAsUpEnabled);
         File[] files = directory.listFiles();
         if (files == null || files.length == 0) {
             if (mUseFirstItemAsUpEnabled) {
@@ -277,7 +277,7 @@ public class ExFilePickerActivity extends AppCompatActivity implements OnListIte
     }
 
     private void setTitle(@NonNull File directory) {
-        if (directory.getAbsolutePath().equals(TOP_DIRECTORY)) {
+        if (isTopDirectory(directory)) {
             mToolbar.setTitle(TOP_DIRECTORY);
         } else {
             mToolbar.setTitle(directory.getName());
@@ -327,9 +327,13 @@ public class ExFilePickerActivity extends AppCompatActivity implements OnListIte
     private void setMultiChoiceModeEnabled(boolean enabled) {
         mIsMultiChoiceModeEnabled = enabled;
         mToolbar.setMultiChoiceModeEnabled(enabled);
-        mAdapter.setUseFirstItemAsUpEnabled(!enabled && mUseFirstItemAsUpEnabled);
+        mAdapter.setUseFirstItemAsUpEnabled(!enabled && mUseFirstItemAsUpEnabled && !isTopDirectory(mCurrentDirectory));
         mAdapter.setMultiChoiceModeEnabled(enabled);
         setChangeViewIcon(mToolbar.getMenu());
+    }
+
+    private boolean isTopDirectory(@Nullable File directory) {
+        return directory != null && TOP_DIRECTORY.equals(directory.getAbsolutePath());
     }
 
     private void setChangeViewIcon(@NonNull Menu menu) {
