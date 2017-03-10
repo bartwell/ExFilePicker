@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="efp__action_grid">Mriežka</string>
+    <string name="efp__action_list">Zoznam</string>
+
+    <string name="efp__empty_directory">Tento adresár je prázdny</string>
+    <string name="efp__action_select_all">Vybrať všetky</string>
+    <string name="efp__action_deselect">Zrušiť výber všetkých</string>
+    <string name="efp__action_invert_selection">Obrátiť výber</string>
+    <string name="efp__new_folder">Nový priečinok</string>
+    <string name="efp__folder_name_hint">Názov priečinka</string>
+    <string name="efp__folder_created">Priečinok bol úspešne vytvorený</string>
+    <string name="efp__folder_not_created">Chyba! Priečinok sa nevytvoril.</string>
+    <string name="efp__folder_already_exists">Priečinok už existuje</string>
+    <string name="efp__sort">Zoradiť</string>
+
+    <string-array name="efp__sorting_types">
+        <item>Podľa názvu, vzostupne</item>
+        <item>Podľa názvu, zostupne</item>
+        <item>Podľa veľkosti, vzostupne</item>
+        <item>Podľa veľkosti, zostupne</item>
+        <item>Podľa dátumu, vzostupne</item>
+        <item>Podľa dátumu, zostupne</item>
+    </string-array>
+
+</resources>
