@@ -55,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (((AppCompatCheckBox) findViewById(R.id.first_item_as_up)).isChecked()) {
             exFilePicker.setUseFirstItemAsUpEnabled(true);
         }
+        if (((AppCompatCheckBox) findViewById(R.id.hide_hidden_files)).isChecked()) {
+            exFilePicker.setHideHiddenFilesEnabled(true);
+        }
         int checkedChoiceRadio = ((RadioGroup) findViewById(R.id.choice_type)).getCheckedRadioButtonId();
         if (checkedChoiceRadio == R.id.choice_type_files) {
             exFilePicker.setChoiceType(ExFilePicker.ChoiceType.FILES);

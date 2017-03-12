@@ -16,5 +16,6 @@
     <string name="reverse_sorting">Обратная сортировка</string>
     <string name="start_from_root">Начать с корневой папки</string>
     <string name="first_item_as_up">Первый пункт списка ведет вверх</string>
+    <string name="hide_hidden_files">Не показывать скрытые файлы</string>
 
 </resources>

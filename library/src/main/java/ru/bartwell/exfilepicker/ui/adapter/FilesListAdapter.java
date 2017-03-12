@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import ru.bartwell.exfilepicker.ExFilePicker;
@@ -21,6 +20,7 @@ import ru.bartwell.exfilepicker.ui.adapter.holder.DirectoryFilesListHolder;
 import ru.bartwell.exfilepicker.ui.adapter.holder.FileFilesListHolder;
 import ru.bartwell.exfilepicker.ui.adapter.holder.UpFilesListHolder;
 import ru.bartwell.exfilepicker.ui.callback.OnListItemClickListener;
+import ru.bartwell.exfilepicker.utils.ListUtils;
 import ru.bartwell.exfilepicker.utils.comparator.FilesListComparatorHelper;
 
 /**
@@ -204,12 +204,11 @@ public class FilesListAdapter extends RecyclerView.Adapter<BaseFilesListHolder> 
     }
 
     private void removeDirectories(List<File> items) {
-        Iterator<File> iterator = items.iterator();
-        while (iterator.hasNext()) {
-            File file = iterator.next();
-            if (file.isDirectory()) {
-                iterator.remove();
+        ListUtils.filterList(items, new ListUtils.ConditionChecker<File>() {
+            @Override
+            public boolean check(@NonNull File file) {
+                return file.isDirectory();
             }
-        }
+        });
     }
 }

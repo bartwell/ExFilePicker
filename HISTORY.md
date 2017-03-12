@@ -1,3 +1,7 @@
+### v2.3
+    * Minor fixes
+    * Add method setHideHiddenFilesEnabled()
+
 ### v2.2
     * Minor fixes
     * Add Slovak translation (thanks to pylerSM)

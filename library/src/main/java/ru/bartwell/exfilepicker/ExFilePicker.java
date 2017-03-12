@@ -30,6 +30,7 @@ public class ExFilePicker {
     @Nullable
     private String mStartDirectory;
     private boolean mUseFirstItemAsUpEnabled;
+    private boolean mHideHiddenFilesEnabled;
 
     public void setCanChooseOnlyOneItem(boolean canChooseOnlyOneItem) {
         mCanChooseOnlyOneItem = canChooseOnlyOneItem;
@@ -71,6 +72,10 @@ public class ExFilePicker {
         mUseFirstItemAsUpEnabled = enabled;
     }
 
+    public void setHideHiddenFilesEnabled(boolean enabled) {
+        mHideHiddenFilesEnabled = enabled;
+    }
+
     public void start(@NonNull Activity activity, int requestCode) {
         Intent intent = new Intent(activity, ExFilePickerActivity.class);
         intent.putExtra(ExFilePickerActivity.EXTRA_CAN_CHOOSE_ONLY_ONE_ITEM, mCanChooseOnlyOneItem);
@@ -83,11 +88,12 @@ public class ExFilePicker {
         intent.putExtra(ExFilePickerActivity.EXTRA_SORTING_TYPE, mSortingType);
         intent.putExtra(ExFilePickerActivity.EXTRA_START_DIRECTORY, mStartDirectory);
         intent.putExtra(ExFilePickerActivity.EXTRA_USE_FIRST_ITEM_AS_UP_ENABLED, mUseFirstItemAsUpEnabled);
+        intent.putExtra(ExFilePickerActivity.EXTRA_HIDE_HIDDEN_FILES, mHideHiddenFilesEnabled);
         activity.startActivityForResult(intent, requestCode);
     }
 
     public enum ChoiceType {
-        ALL, FILES, DIRECTORIES;
+        ALL, FILES, DIRECTORIES
     }
 
     public enum SortingType {
