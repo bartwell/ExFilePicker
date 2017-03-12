@@ -55,7 +55,7 @@ __2.__ Use methods from `ExFilePicker` class to launch picker activity and recei
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == EX_FILE_PICKER_RESULT) {
 		    ExFilePickerResult result = ExFilePickerResult.getFromIntent(data);
-			if (result != null && object.getCount() > 0) {
+			if (result != null && result.getCount() > 0) {
 				// Here is object contains selected files names and path
 			}
 		}
