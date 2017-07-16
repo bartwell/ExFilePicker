@@ -1,6 +1,7 @@
 package ru.bartwell.exfilepicker;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -77,7 +78,16 @@ public class ExFilePicker {
     }
 
     public void start(@NonNull Activity activity, int requestCode) {
-        Intent intent = new Intent(activity, ExFilePickerActivity.class);
+        activity.startActivityForResult(createIntent(activity), requestCode);
+    }
+
+    public void start(@NonNull android.support.v4.app.Fragment fragment, int requestCode) {
+        fragment.startActivityForResult(createIntent(fragment.getContext()), requestCode);
+    }
+
+    @NonNull
+    private Intent createIntent(@NonNull Context context) {
+        Intent intent = new Intent(context, ExFilePickerActivity.class);
         intent.putExtra(ExFilePickerActivity.EXTRA_CAN_CHOOSE_ONLY_ONE_ITEM, mCanChooseOnlyOneItem);
         intent.putExtra(ExFilePickerActivity.EXTRA_SHOW_ONLY_EXTENSIONS, mShowOnlyExtensions);
         intent.putExtra(ExFilePickerActivity.EXTRA_EXCEPT_EXTENSIONS, mExceptExtensions);
@@ -89,7 +99,7 @@ public class ExFilePicker {
         intent.putExtra(ExFilePickerActivity.EXTRA_START_DIRECTORY, mStartDirectory);
         intent.putExtra(ExFilePickerActivity.EXTRA_USE_FIRST_ITEM_AS_UP_ENABLED, mUseFirstItemAsUpEnabled);
         intent.putExtra(ExFilePickerActivity.EXTRA_HIDE_HIDDEN_FILES, mHideHiddenFilesEnabled);
-        activity.startActivityForResult(intent, requestCode);
+        return intent;
     }
 
     public enum ChoiceType {

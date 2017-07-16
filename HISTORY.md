@@ -1,5 +1,9 @@
 ### v2.3
     * Minor fixes
+    * Add method start for Fragment
+
+### v2.3
+    * Minor fixes
     * Add method setHideHiddenFilesEnabled()
 
 ### v2.2

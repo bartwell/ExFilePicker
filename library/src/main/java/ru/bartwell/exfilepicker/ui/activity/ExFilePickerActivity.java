@@ -180,6 +180,7 @@ public class ExFilePickerActivity extends AppCompatActivity implements OnListIte
     public void onClick(@NonNull View view) {
         if (mIsMultiChoiceModeEnabled) {
             setMultiChoiceModeEnabled(false);
+            setupOkButtonVisibility();
         } else {
             finish();
         }
@@ -191,6 +192,7 @@ public class ExFilePickerActivity extends AppCompatActivity implements OnListIte
             if (event.getAction() == KeyEvent.ACTION_UP) {
                 if (mIsMultiChoiceModeEnabled) {
                     setMultiChoiceModeEnabled(false);
+                    setupOkButtonVisibility();
                 } else {
                     if (isTopDirectory(mCurrentDirectory)) {
                         finish();
@@ -392,10 +394,14 @@ public class ExFilePickerActivity extends AppCompatActivity implements OnListIte
         mToolbar.setQuitButtonEnabled(mIsQuitButtonEnabled);
         mToolbar.setMultiChoiceModeEnabled(false);
         Menu menu = mToolbar.getMenu();
-        menu.findItem(R.id.ok).setVisible(mChoiceType == ExFilePicker.ChoiceType.DIRECTORIES);
+        setupOkButtonVisibility();
         menu.findItem(R.id.new_folder).setVisible(!mIsNewFolderButtonDisabled);
         menu.findItem(R.id.sort).setVisible(!mIsSortButtonDisabled);
         mEmptyView = findViewById(R.id.empty_view);
+    }
+
+    private void setupOkButtonVisibility() {
+        mToolbar.getMenu().findItem(R.id.ok).setVisible(mChoiceType == ExFilePicker.ChoiceType.DIRECTORIES);
     }
 
     @NonNull
