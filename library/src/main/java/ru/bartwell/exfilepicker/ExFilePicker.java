@@ -3,8 +3,10 @@ package ru.bartwell.exfilepicker;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 
 import ru.bartwell.exfilepicker.ui.activity.ExFilePickerActivity;
 
@@ -83,6 +85,17 @@ public class ExFilePicker {
 
     public void start(@NonNull android.support.v4.app.Fragment fragment, int requestCode) {
         fragment.startActivityForResult(createIntent(fragment.getContext()), requestCode);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+    public void start(@NonNull android.app.Fragment fragment, int requestCode) {
+        Context context;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            context = fragment.getContext();
+        } else {
+            context = fragment.getActivity();
+        }
+        fragment.startActivityForResult(createIntent(context), requestCode);
     }
 
     @NonNull
