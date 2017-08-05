@@ -1,4 +1,4 @@
-### v2.3
+### v2.4
     * Minor fixes
     * Add method start for Fragment
 
