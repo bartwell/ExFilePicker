@@ -1,3 +1,6 @@
+### v2.5
+    * Add storage selection button
+
 ### v2.4
     * Minor fixes
     * Add method start for Fragment

@@ -11,6 +11,7 @@
         <item name="efp__ic_action_ok">@drawable/efp_light__ic_action_ok</item>
         <item name="efp__ic_action_select_all">@drawable/efp_light__ic_action_select_all</item>
         <item name="efp__ic_action_sort">@drawable/efp_light__ic_action_sort</item>
+        <item name="efp__ic_action_storage">@drawable/efp_light__ic_action_storage</item>
     </style>
 
     <style name="ExFilePickerThemeDark" parent="Theme.AppCompat.NoActionBar">
@@ -23,6 +24,7 @@
         <item name="efp__ic_action_ok">@drawable/efp_dark__ic_action_ok</item>
         <item name="efp__ic_action_select_all">@drawable/efp_dark__ic_action_select_all</item>
         <item name="efp__ic_action_sort">@drawable/efp_dark__ic_action_sort</item>
+        <item name="efp__ic_action_storage">@drawable/efp_dark__ic_action_storage</item>
     </style>
 
 </resources>

@@ -33,5 +33,6 @@
         <item>तारीख तक, आरोही</item>
         <item>तारीख तक, घटत</item>
     </string-array>
+    <string name="efp__storage">भंडारण</string>
 
 </resources>

@@ -33,5 +33,6 @@
         <item>بواسطة التاريخ، تصاعدي</item>
         <item>بواسطة التاريخ، تنازلي</item>
     </string-array>
+    <string name="efp__storage">تخزين</string>
 
 </resources>

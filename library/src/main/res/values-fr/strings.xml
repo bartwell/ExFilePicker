@@ -33,5 +33,6 @@
         <item>Par date, croissant</item>
         <item>Par date, décroissant</item>
     </string-array>
+    <string name="efp__storage">Stockage</string>
 
 </resources>

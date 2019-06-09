@@ -33,5 +33,6 @@
         <item>Kuupäeva järgi, kasvavalt</item>
         <item>Kuupäeva järgi, kahanevalt</item>
     </string-array>
+    <string name="efp__storage">Ladustamine</string>
 
 </resources>

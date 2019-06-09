@@ -33,5 +33,6 @@
 		<item>Tarihe göre, artan</item>
 		<item>Tarihe göre, azalan</item>
 	</string-array>
+    <string name="efp__storage">Depo</string>
 
 </resources>

@@ -8,6 +8,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.io.File;
 
@@ -29,8 +30,8 @@ public class FileFilesListHolder extends BaseFilesListHolder {
     public FileFilesListHolder(@NonNull View itemView) {
         super(itemView);
         mContext = itemView.getContext();
-        mFileSize = (AppCompatTextView) itemView.findViewById(R.id.filesize);
-        mThumbnail = (AppCompatImageView) itemView.findViewById(R.id.thumbnail);
+        mFileSize = itemView.findViewById(R.id.filesize);
+        mThumbnail = itemView.findViewById(R.id.thumbnail);
     }
 
     @Override
@@ -41,9 +42,11 @@ public class FileFilesListHolder extends BaseFilesListHolder {
             mFileSize.setText(Utils.getHumanReadableFileSize(mContext, file.length()));
         }
 
+        RequestOptions options = new RequestOptions()
+                .error(R.drawable.efp__ic_file);
         Glide.with(mContext)
                 .load(file)
-                .error(R.drawable.efp__ic_file)
+                .apply(options)
                 .into(mThumbnail);
     }
 }

@@ -24,6 +24,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import ru.bartwell.exfilepicker.ExFilePicker;
@@ -33,13 +34,14 @@ import ru.bartwell.exfilepicker.ui.adapter.FilesListAdapter;
 import ru.bartwell.exfilepicker.ui.callback.OnListItemClickListener;
 import ru.bartwell.exfilepicker.ui.dialog.NewFolderDialog;
 import ru.bartwell.exfilepicker.ui.dialog.SortingDialog;
+import ru.bartwell.exfilepicker.ui.dialog.StorageDialog;
 import ru.bartwell.exfilepicker.ui.view.FilesListToolbar;
 import ru.bartwell.exfilepicker.utils.ListUtils;
 import ru.bartwell.exfilepicker.utils.Utils;
 
 public class ExFilePickerActivity extends AppCompatActivity implements OnListItemClickListener,
         Toolbar.OnMenuItemClickListener, View.OnClickListener, NewFolderDialog.OnNewFolderNameEnteredListener,
-        SortingDialog.OnSortingSelectedListener {
+        SortingDialog.OnSortingSelectedListener, StorageDialog.OnStorageSelectedListener {
 
     public static final String EXTRA_CAN_CHOOSE_ONLY_ONE_ITEM = "CAN_CHOOSE_ONLY_ONE_ITEM";
     public static final String EXTRA_SHOW_ONLY_EXTENSIONS = "SHOW_ONLY_EXTENSIONS";
@@ -156,6 +158,10 @@ public class ExFilePickerActivity extends AppCompatActivity implements OnListIte
             SortingDialog dialog = new SortingDialog(this);
             dialog.setOnSortingSelectedListener(this);
             dialog.show();
+        } else if (itemId == R.id.storage) {
+            StorageDialog dialog = new StorageDialog(this);
+            dialog.setOnStorageSelectedListener(this);
+            dialog.show();
         } else if (itemId == R.id.new_folder) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 showNewFolderDialog();
@@ -228,6 +234,12 @@ public class ExFilePickerActivity extends AppCompatActivity implements OnListIte
     public void onSortingSelected(@NonNull ExFilePicker.SortingType sortingType) {
         mSortingType = sortingType;
         mAdapter.sort(mSortingType);
+    }
+
+    @Override
+    public void onStorageSelected(String path) {
+        mCurrentDirectory = new File(path);
+        readDirectory(mCurrentDirectory);
     }
 
     private void readUpDirectory() {
@@ -381,14 +393,14 @@ public class ExFilePickerActivity extends AppCompatActivity implements OnListIte
     }
 
     private void setupViews() {
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new FilesListAdapter();
         mAdapter.setOnListItemClickListener(this);
         mAdapter.setCanChooseOnlyFiles(mChoiceType == ExFilePicker.ChoiceType.FILES);
         mAdapter.setUseFirstItemAsUpEnabled(mUseFirstItemAsUpEnabled);
         mRecyclerView.setAdapter(mAdapter);
-        mToolbar = (FilesListToolbar) findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
         mToolbar.setOnMenuItemClickListener(this);
         mToolbar.setNavigationOnClickListener(this);
         mToolbar.setQuitButtonEnabled(mIsQuitButtonEnabled);
@@ -412,6 +424,12 @@ public class ExFilePickerActivity extends AppCompatActivity implements OnListIte
             File tmp = new File(startPath);
             if (tmp.exists() && tmp.isDirectory()) {
                 path = tmp;
+            }
+        }
+        if (path == null) {
+            LinkedHashMap<String, String> storages = Utils.getExternalStoragePaths(this);
+            if (storages.size() > 0) {
+                path = new File((String) storages.keySet().toArray()[0]);
             }
         }
         if (path == null) {

@@ -33,5 +33,6 @@
         <item>日付順、上昇</item>
         <item>日付順、下行</item>
     </string-array>
+    <string name="efp__storage">収納</string>
 
 </resources>

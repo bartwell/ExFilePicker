@@ -11,6 +11,13 @@
         tools:ignore="AlwaysShowAction"/>
 
     <item
+        android:id="@+id/storage"
+        android:icon="?attr/efp__ic_action_storage"
+        android:title="@string/efp__storage"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction"/>
+
+    <item
         android:id="@+id/new_folder"
         android:icon="?attr/efp__ic_action_new_folder"
         android:title="@string/efp__new_folder"

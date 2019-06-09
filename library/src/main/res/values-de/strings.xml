@@ -33,5 +33,6 @@
         <item>Nach Datum, aufsteigend</item>
         <item>Nach Datum, absteigend</item>
     </string-array>
+    <string name="efp__storage">Lagerung</string>
 
 </resources>

@@ -33,5 +33,6 @@
         <item>Pēc datuma, augošā</item>
         <item>Pēc datuma, dilstošā</item>
     </string-array>
+    <string name="efp__storage">Uzglabāšana</string>
 
 </resources>

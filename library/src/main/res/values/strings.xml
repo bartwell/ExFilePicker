@@ -24,7 +24,9 @@
     <string name="efp__folder_not_created">Error! Folder isn\'t created</string>
     <string name="efp__folder_already_exists">Folder already exists</string>
     <string name="efp__sort">Sort</string>
-    <string-array name="efp__sorting_types">
+    <string name="efp__storage">Storage</string>
+
+    <string-array name="efp__sorting_types">
         <item>By name, ascending</item>
         <item>By name, descending</item>
         <item>By size, ascending</item>
