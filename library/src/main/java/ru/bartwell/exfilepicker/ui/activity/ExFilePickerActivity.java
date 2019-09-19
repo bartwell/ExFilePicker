@@ -55,6 +55,7 @@ public class ExFilePickerActivity extends AppCompatActivity implements OnListIte
     public static final String EXTRA_USE_FIRST_ITEM_AS_UP_ENABLED = "USE_FIRST_ITEM_AS_UP_ENABLED";
     public static final String EXTRA_HIDE_HIDDEN_FILES = "HIDE_HIDDEN_FILES";
     public static final String PERMISSION_READ_EXTERNAL_STORAGE = "android.permission.READ_EXTERNAL_STORAGE";
+    private static final String DIRECTORY_STATE = "DIRECTORY_STATE";
     private static final int REQUEST_CODE_READ_EXTERNAL_STORAGE = 1;
     private static final int REQUEST_CODE_WRITE_EXTERNAL_STORAGE = 2;
     private static final String TOP_DIRECTORY = "/";
@@ -87,6 +88,10 @@ public class ExFilePickerActivity extends AppCompatActivity implements OnListIte
 
         handleIntent();
         setupViews();
+
+        if (savedInstanceState != null && savedInstanceState.containsKey(DIRECTORY_STATE)) {
+            mCurrentDirectory = new File(savedInstanceState.getString(DIRECTORY_STATE));
+        }
 
         if (ContextCompat.checkSelfPermission(this, PERMISSION_READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             readDirectory(mCurrentDirectory);
@@ -439,5 +444,11 @@ public class ExFilePickerActivity extends AppCompatActivity implements OnListIte
             }
         }
         return path;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString(DIRECTORY_STATE, mCurrentDirectory.getAbsolutePath());
     }
 }
