@@ -1,21 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="app_name">ExFilePicker Sample</string>
-    <string name="choose_files">Choose files</string>
-    <string name="only_one_item">Only one item</string>
-    <string name="filter_listed">Show only *.jpeg and *.jpg</string>
-    <string name="filter_exclude">Don\'t show *.jpg</string>
-    <string name="choice_type_all">All</string>
-    <string name="choice_type_files">Files only</string>
-    <string name="choice_type_directories">Directories only</string>
-    <string name="choice_type">Choice type:</string>
-    <string name="disable_new_folder_button">Disable \"New folder\" button</string>
-    <string name="disable_sort_button">Disable \"Sort\" button</string>
-    <string name="enable_quit_button">Enable quit button</string>
-    <string name="reverse_sorting">Reverse sorting</string>
-    <string name="start_from_root">Start from root folder</string>
-    <string name="first_item_as_up">Use first item as up</string>
-    <string name="hide_hidden_files">Do not show hidden files</string>
-
+    <string name="app_name">Sample</string>
 </resources>
