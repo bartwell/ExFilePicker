@@ -27,7 +27,7 @@ File.open("settings.gradle", "r") do |file_handle|
             warn("No lint report found")
         end
 
-        detektFile = String.new(gradleModule+"build/reports/detekt.xml")
+        detektFile = String.new(gradleModule+"build/reports/detekt/detekt.xml")
         if File.file?(detektFile)
             kotlin_detekt.report_file = detektFile
             kotlin_detekt.skip_gradle_task = true
