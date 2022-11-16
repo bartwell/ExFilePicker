@@ -2,11 +2,8 @@ name: Review PR with Danger
 
 on:
   pull_request:
-    branches: ["develop"]
+    branches: ["dev"]
     types: [opened, synchronize, closed]
-
-env:
-  SECRET_PROPERTIES: ${{ secrets.PROPERTIES }}
 
 jobs:
   build:
