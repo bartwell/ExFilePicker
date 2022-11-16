@@ -46,10 +46,10 @@ jobs:
         run: ./gradlew clean assembleDebug
 
       - name: Run Lint
-        run: ./gradlew mewwalletui:lintDebug
+        run: ./gradlew lintDebug
 
       - name: Run Detekt
-        run: ./gradlew detektDebug
+        run: ./gradlew detektAll
 
       - name: Run Danger
         run: |
