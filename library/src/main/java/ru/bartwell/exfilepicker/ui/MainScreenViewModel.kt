@@ -5,13 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Environment
 import androidx.documentfile.provider.DocumentFile
-import java.io.File
 import ru.bartwell.exfilepicker.ExFilePicker
 import ru.bartwell.exfilepicker.core.BaseViewModel
 import ru.bartwell.exfilepicker.core.extension.findActivity
 import ru.bartwell.exfilepicker.core.extension.resolvePath
 import ru.bartwell.exfilepicker.data.FileInfo
 import ru.bartwell.exfilepicker.data.config.Config
+import java.io.File
 
 internal class MainScreenViewModel(
     private val context: Context,

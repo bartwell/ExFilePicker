@@ -68,7 +68,7 @@ private fun ScreenContent() {
 
 @Preview(showBackground = true)
 @Composable
-fun Preview() {
+private fun Preview() {
     ExFilePickerTheme {
         ScreenContent()
     }
