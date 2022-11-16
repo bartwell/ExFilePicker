@@ -16,7 +16,7 @@ File.open("settings.gradle", "r") do |file_handle|
     if setting.include? "include"
         gradleModule = setting[10, setting.length-12]
 
-        androidLintDebugFile = String.new(gradleModule+"build/reports/lint-results-debug.xml")
+        androidLintDebugFile = String.new(gradleModule+"/build/reports/lint-results-debug.xml")
         warn("androidLintDebugFile="+androidLintDebugFile)
         if File.file?(androidLintDebugFile)
             android_lint.skip_gradle_task = true
@@ -28,7 +28,7 @@ File.open("settings.gradle", "r") do |file_handle|
             warn("No lint report found")
         end
 
-        detektFile = String.new(gradleModule+"build/reports/detekt/detekt.xml")
+        detektFile = String.new(gradleModule+"/build/reports/detekt/detekt.xml")
         warn("detektFile="+detektFile)
         if File.file?(detektFile)
             kotlin_detekt.report_file = detektFile
