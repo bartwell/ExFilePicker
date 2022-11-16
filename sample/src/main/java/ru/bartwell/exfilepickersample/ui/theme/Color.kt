@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package ru.bartwell.exfilepickersample.ui.theme
 
 import androidx.compose.ui.graphics.Color

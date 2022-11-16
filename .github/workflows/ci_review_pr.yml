@@ -1,0 +1,62 @@
+name: Review PR with Danger
+
+on:
+  pull_request:
+    branches: ["develop"]
+    types: [opened, synchronize, closed]
+
+env:
+  SECRET_PROPERTIES: ${{ secrets.PROPERTIES }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Clone main repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 100
+
+      - name: set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Set up Ruby 3.0
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+      - uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
+      - name: Bundle install
+        run: |
+          gem install bundler
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Assemble debug build
+        run: ./gradlew clean assembleDebug
+
+      - name: Run Lint
+        run: ./gradlew mewwalletui:lintDebug
+
+      - name: Run Detekt
+        run: ./gradlew detektDebug
+
+      - name: Run Danger
+        run: |
+          gem install danger
+          bundle exec danger --verbose --dangerfile=Dangerfile --danger_id=danger-pr --fail-on-errors=true
+        env:
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.REPO_KEY }}

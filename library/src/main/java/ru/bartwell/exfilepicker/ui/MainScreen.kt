@@ -75,12 +75,13 @@ fun Item(
     }
 }
 
+@Suppress("MagicNumber")
 @Preview(showBackground = true)
 @Composable
-fun Preview() {
+private fun Preview() {
     val files = listOf(
         FileInfo("folder", "", "", true, 0, 0),
-        FileInfo("file.txt", "", "", false, 100500, 0)
+        FileInfo("file.txt", "", "", false, 100_500, 0)
     )
     val config = Config()
     ExFilePickerTheme(config.uiConfig) {
