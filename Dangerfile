@@ -17,7 +17,6 @@ File.open("settings.gradle", "r") do |file_handle|
         gradleModule = setting[10, setting.length-12]
 
         androidLintDebugFile = String.new(gradleModule+"/build/reports/lint-results-debug.xml")
-        warn("androidLintDebugFile="+androidLintDebugFile)
         if File.file?(androidLintDebugFile)
             android_lint.skip_gradle_task = true
             android_lint.severity = "Warning"
@@ -29,7 +28,6 @@ File.open("settings.gradle", "r") do |file_handle|
         end
 
         detektFile = String.new(gradleModule+"/build/reports/detekt/detekt.xml")
-        warn("detektFile="+detektFile)
         if File.file?(detektFile)
             kotlin_detekt.report_file = detektFile
             kotlin_detekt.skip_gradle_task = true
