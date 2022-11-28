@@ -1,13 +1,11 @@
 package ru.bartwell.exfilepickersample.items
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -19,7 +17,7 @@ fun RadioButtonItem(modifier: Modifier = Modifier, title: String, onSelectedChan
         RadioButton(
             modifier = Modifier.padding(4.dp),
             selected = selected,
-            onClick =  onSelectedChange
+            onClick = onSelectedChange
         )
         Text(
             modifier = modifier.align(Alignment.CenterVertically),
@@ -36,7 +34,7 @@ private fun Preview() {
         RadioButtonItem(
             selected = true,
             title = "Item",
-            onSelectedChange = {  },
+            onSelectedChange = {},
         )
     }
 }
