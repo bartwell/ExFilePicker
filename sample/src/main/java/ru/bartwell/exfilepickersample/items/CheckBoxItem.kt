@@ -9,7 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CheckBoxItem(modifier: Modifier = Modifier, title: String, onCheckedChange: (Boolean) -> Unit, isChecked: Boolean) {
+fun CheckBoxItem(title: String, isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -21,7 +21,7 @@ fun CheckBoxItem(modifier: Modifier = Modifier, title: String, onCheckedChange: 
             onCheckedChange = onCheckedChange,
         )
         Text(
-            modifier = modifier.align(Alignment.CenterVertically),
+            modifier = Modifier.align(Alignment.CenterVertically),
             text = title,
             style = MaterialTheme.typography.bodyLarge
         )

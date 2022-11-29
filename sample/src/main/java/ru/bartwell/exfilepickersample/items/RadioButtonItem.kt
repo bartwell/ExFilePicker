@@ -9,7 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun RadioButtonItem(modifier: Modifier = Modifier, title: String, onSelectedChange: () -> Unit, selected: Boolean) {
+fun RadioButtonItem(selected: Boolean, title: String, onSelectedChange: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -20,7 +20,7 @@ fun RadioButtonItem(modifier: Modifier = Modifier, title: String, onSelectedChan
             onClick = onSelectedChange
         )
         Text(
-            modifier = modifier.align(Alignment.CenterVertically),
+            modifier = Modifier.align(Alignment.CenterVertically),
             text = title,
             style = MaterialTheme.typography.bodyLarge
         )
